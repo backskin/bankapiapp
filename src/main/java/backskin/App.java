@@ -1,7 +1,10 @@
 package backskin;
 
+
+import org.springframework.boot.SpringApplication;
+
 public class App {
-    public static String getHello() {
-        return "Hello";
+    public static void main(String[] args) {
+        SpringApplication.run(App.class);
     }
 }
