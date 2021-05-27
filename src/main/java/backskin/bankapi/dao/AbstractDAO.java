@@ -1,47 +1,52 @@
 package backskin.bankapi.dao;
 
 
-import backskin.bankapi.domain.AbstractModel;
+import backskin.bankapi.dao.mappers.AbstractMapper;
+import backskin.bankapi.models.AbstractModel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 @Builder
 @Component
+@Getter
 @RequiredArgsConstructor
 public abstract class AbstractDAO<T extends AbstractModel> implements DAO<T,Long>{
 
     private Connection connection;
-    protected abstract String getTableName();
-    protected abstract RowMapper<T> getMapper();
     @Builder.Default
     private final String idColumnName = "ID";
 
-    @Builder.Default
-    protected final CreatorWithSQLException<Statement> statementCreator =
-            () -> connection.createStatement();
+    protected abstract String getTableName();
+    public abstract AbstractMapper<T> getMapper();
+    @Autowired
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public void create(T entity) throws SQLException {
-        Statement statement = statementCreator.create();
-        statement.execute(
-                "INSERT INTO "+getTableName()+"("+entity.fields()+")"
-                        +" VALUES("+entity.values()+");"
-        );
+        String sqlQuery = "INSERT INTO ? (?) VALUES(?)";
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        statement.setString(1, getTableName());
+        statement.setString(2, entity.fields());
+        statement.setString(3, entity.values());
+        statement.execute();
         connection.commit();
     }
 
     @Override
     public T read(Long id) throws SQLException {
-        Statement statement = statementCreator.create();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM "+getTableName()
-                +" WHERE "+idColumnName+" = "+id.toString()+";");
+        String sqlQuery = "SELECT * FROM ? WHERE ?";
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        statement.setString(1, getTableName());
+        statement.setString(2, AbstractMapper.getIdValidator().validationRule(id));
+        ResultSet resultSet = statement.executeQuery();
         resultSet.next();
         T output = getMapper().mapRow(resultSet,resultSet.getRow());
         connection.commit();
@@ -50,8 +55,11 @@ public abstract class AbstractDAO<T extends AbstractModel> implements DAO<T,Long
 
     @Override
     public void delete(T entity) throws SQLException {
-        Statement statement = statementCreator.create();
-        statement.execute("DELETE FROM "+getTableName()
-                +" WHERE "+idColumnName+" = "+entity.getId()+";");
+        String sqlQuery = "DELETE FROM ? WHERE ?";
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        statement.setString(1, getTableName());
+        statement.setString(2, AbstractMapper.getIdValidator().validationRule(entity.getId()));
+        statement.execute();
+        connection.commit();
     }
 }

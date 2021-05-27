@@ -1,17 +1,13 @@
 package backskin.bankapi.dao;
 
+import backskin.bankapi.dao.mappers.BankClientMapper;
 import backskin.bankapi.domain.BankClient;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-@Component
+@Repository
+@Qualifier("bankClientDAO")
 public class BankClientDAO extends AbstractDAO<BankClient> {
 
     private final String tableName;

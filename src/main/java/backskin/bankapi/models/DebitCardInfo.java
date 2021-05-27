@@ -1,5 +1,6 @@
-package backskin.bankapi.domain;
+package backskin.bankapi.models;
 
+import backskin.bankapi.domain.DebitCard;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

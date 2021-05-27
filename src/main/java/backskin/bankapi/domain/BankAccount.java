@@ -1,18 +1,31 @@
 package backskin.bankapi.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import backskin.bankapi.models.AbstractModel;
+import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Getter
-@Builder(builderClassName = "BankAccountBuilder")
 public class BankAccount extends AbstractModel {
+
+    @Builder(builderClassName = "BankAccountBuilder")
+    public BankAccount(@NotNull Long id,
+                       @NotNull String number,
+                       @NotNull Long bankClientId,
+                       BigDecimal balance) {
+        super(id);
+        this.number = number;
+        this.bankClientId = bankClientId;
+        this.balance = balance;
+    }
+
+    @NonNull
     private final String number;
     @Setter
-    private BigInteger bankClientId;
+    @NonNull
+    private Long bankClientId;
     @Setter
     private BigDecimal balance;
 

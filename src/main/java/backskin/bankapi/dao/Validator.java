@@ -4,7 +4,13 @@ public interface Validator<ObjectType, TagType> {
     boolean validateObject(ObjectType object, TagType tag);
     TagType extractTag(ObjectType objectType);
     String tagName();
-    default String validationSQLRule(TagType tag){
-        return tagName() + " = " + tag.toString();
+    default String validationRule(TagType tag){
+        String tagName;
+        if (tag instanceof String) {
+            tagName = "'"+tagName()+"'";
+        } else {
+            tagName = tagName();
+        }
+        return tagName + " = " + tag.toString();
     };
 }

@@ -1,4 +1,4 @@
-package backskin.bankapi.dao;
+package backskin.bankapi.dao.mappers;
 
 import backskin.bankapi.domain.BankClient;
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +10,6 @@ import java.sql.SQLException;
 public class BankClientMapper implements RowMapper<BankClient> {
     @Override
     public BankClient mapRow(@NotNull ResultSet resultSet, int i) throws SQLException {
-        return null;
+        return
     }
 }

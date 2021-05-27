@@ -1,6 +1,6 @@
 package backskin.bankapi.dao;
 
-import backskin.bankapi.domain.DatabaseModel;
+import backskin.bankapi.models.DatabaseModel;
 
 import java.sql.SQLException;
 import java.util.List;

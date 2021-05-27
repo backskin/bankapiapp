@@ -41,4 +41,9 @@ public class AppConfiguration {
     String bankAccountsTableName(){
         return "bank_accounts";
     }
+
+    @Bean
+    String debitCardsTableName(){
+        return "debit_cards";
+    }
 }

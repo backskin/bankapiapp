@@ -1,7 +1,8 @@
 package backskin.bankapi.dao;
 
-import backskin.bankapi.domain.AbstractModel;
+import backskin.bankapi.models.AbstractModel;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,6 +15,8 @@ public abstract class AbstractRepo<T extends AbstractModel> extends AbstractDAO<
     @Override
     public List<T> getAll() throws SQLException {
         List<T> container = createContainer();
+        String sqlQuery = "SELECT * FROM ?";
+        PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
         Statement statement = statementCreator.create();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM "+getTableName());
         while (resultSet.next()){
@@ -28,7 +31,7 @@ public abstract class AbstractRepo<T extends AbstractModel> extends AbstractDAO<
         List<T> container = createContainer();
         Statement statement = statementCreator.create();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM "+getTableName()
-                +" WHERE "+validator.validationSQLRule(tagValue));
+                +" WHERE "+validator.validationRule(tagValue));
         while (resultSet.next()){
             T value = getMapper().mapRow(resultSet, resultSet.getRow());
             container.add(value);

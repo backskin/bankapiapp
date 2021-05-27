@@ -5,14 +5,14 @@ CREATE TABLE bank_clients(
      id BIGINT PRIMARY KEY AUTO_INCREMENT,
      full_name VARCHAR,
      phone_number VARCHAR,
-     passport_id BIGINT NOT NULL
+     passport_id Long NOT NULL
 );
 /*
     Bank Accounts Table.
     One client may have many accounts.
 */
 CREATE TABLE bank_accounts(
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     number VARCHAR(24) NOT NULL,
     bank_client_id BIGINT NOT NULL, -- one to many
     balance DECIMAL,
@@ -26,7 +26,7 @@ CREATE TABLE bank_accounts(
 CREATE TABLE debit_cards(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     bank_account_id BIGINT, -- one to many
-    number VARCHAR(19) NOT NULL,
+    number VARCHAR(20) NOT NULL,
     expiration_date VARCHAR(4) NOT NULL,
     cvv_code VARCHAR(3) NOT NULL,
     CONSTRAINT bank_debit_cards_account_fk

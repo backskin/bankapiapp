@@ -1,4 +1,4 @@
-package backskin.bankapi.dao;
+package backskin.bankapi.dao.mappers;
 
 import backskin.bankapi.domain.DebitCard;
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +10,7 @@ import java.sql.SQLException;
 public class DebitCardMapper implements RowMapper<DebitCard> {
     @Override
     public DebitCard mapRow(@NotNull ResultSet resultSet, int i) throws SQLException {
+
         return null;
     }
 }

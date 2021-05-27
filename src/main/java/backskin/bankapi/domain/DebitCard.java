@@ -1,5 +1,7 @@
 package backskin.bankapi.domain;
 
+import backskin.bankapi.models.AbstractModel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,12 +14,19 @@ import java.math.BigInteger;
  * Erery field is final, because that is so in the real bank.
  */
 @Getter
-@Builder(builderClassName = "DebitCardBuilder")
 public class DebitCard extends AbstractModel {
     private final String number;
-    private final BigInteger bankAccountId;
+    private final Long bankAccountId;
     private final String expirationDate;
     private final String cvvCode;
+
+    public DebitCard(Long id, String number, Long bankAccountId, String expirationDate, String cvvCode) {
+        super(id);
+        this.number = number;
+        this.bankAccountId = bankAccountId;
+        this.expirationDate = expirationDate;
+        this.cvvCode = cvvCode;
+    }
 
     @Override
     public String fields() {
