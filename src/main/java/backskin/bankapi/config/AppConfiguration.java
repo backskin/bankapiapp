@@ -28,6 +28,17 @@ public class AppConfiguration {
     @Autowired
     @Synchronized
     Connection connection(DataSource dataSource) throws SQLException {
-        return dataSource.getConnection();
+        Connection connection = dataSource.getConnection();
+        connection.setAutoCommit(false);
+        return connection;
+    }
+    @Bean
+    String bankClientsTableName(){
+        return "bank_clients";
+    }
+
+    @Bean
+    String bankAccountsTableName(){
+        return "bank_accounts";
     }
 }

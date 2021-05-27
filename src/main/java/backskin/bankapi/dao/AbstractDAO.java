@@ -4,7 +4,6 @@ package backskin.bankapi.dao;
 import backskin.bankapi.domain.AbstractModel;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
@@ -16,37 +15,43 @@ import java.sql.Statement;
 @Builder
 @Component
 @RequiredArgsConstructor
-public abstract class AbstractDAO<T extends AbstractModel, Id> implements DAO<T,Id>{
+public abstract class AbstractDAO<T extends AbstractModel> implements DAO<T,Long>{
 
     private Connection connection;
     protected abstract String getTableName();
     protected abstract RowMapper<T> getMapper();
+    @Builder.Default
+    private final String idColumnName = "ID";
+
+    @Builder.Default
+    protected final CreatorWithSQLException<Statement> statementCreator =
+            () -> connection.createStatement();
 
     @Override
     public void create(T entity) throws SQLException {
-        connection.createStatement().execute(
-                "UPDATE "+getTableName()+"("+entity.fields()+")"
-                        +" VALUES("+entity.values()+");");
+        Statement statement = statementCreator.create();
+        statement.execute(
+                "INSERT INTO "+getTableName()+"("+entity.fields()+")"
+                        +" VALUES("+entity.values()+");"
+        );
+        connection.commit();
     }
 
     @Override
-    public T read(Id id) throws Exception {
-        connection.setAutoCommit(false);
-        Statement statement = connection.createStatement();
-        statement.execute("SELECT * FROM "+getTableName());
-        ResultSet resultSet = statement.getResultSet();
+    public T read(Long id) throws SQLException {
+        Statement statement = statementCreator.create();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM "+getTableName()
+                +" WHERE "+idColumnName+" = "+id.toString()+";");
+        resultSet.next();
         T output = getMapper().mapRow(resultSet,resultSet.getRow());
         connection.commit();
         return output;
     }
 
     @Override
-    public void update(T entity, Id id) throws Exception {
-
-    }
-
-    @Override
-    public void delete(T entity) throws Exception {
-
+    public void delete(T entity) throws SQLException {
+        Statement statement = statementCreator.create();
+        statement.execute("DELETE FROM "+getTableName()
+                +" WHERE "+idColumnName+" = "+entity.getId()+";");
     }
 }
