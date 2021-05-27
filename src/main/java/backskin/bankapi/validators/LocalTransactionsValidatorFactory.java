@@ -1,6 +1,7 @@
 package backskin.bankapi.validators;
 
 import backskin.bankapi.domain.LocalTransaction;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -9,8 +10,9 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Configuration
-public class LocalTransactionsValidatorFactory extends ValidatorFactory {
+public class LocalTransactionsValidatorFactory {
     @Bean
+    @Qualifier("transactionValidatorByAccountId")
     Validator<LocalTransaction, Long> byAccountId(){
         return new Validator<>() {
             @Override
@@ -30,6 +32,7 @@ public class LocalTransactionsValidatorFactory extends ValidatorFactory {
         };
     }
     @Bean
+    @Qualifier("validatorByDifference")
     Validator<LocalTransaction, BigDecimal> byDifference(){
         return new Validator<>() {
             @Override

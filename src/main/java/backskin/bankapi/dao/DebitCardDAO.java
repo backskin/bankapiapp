@@ -3,12 +3,14 @@ package backskin.bankapi.dao;
 import backskin.bankapi.dao.mappers.DebitCardSqlMapper;
 import backskin.bankapi.domain.DebitCard;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 @Repository
 @Qualifier("debitCardDAO")
@@ -16,13 +18,15 @@ import java.sql.PreparedStatement;
 public class DebitCardDAO extends AbstractDAO<DebitCard> {
 
     private final String tableName;
-    private final DebitCardSqlMapper mapper;
+    private DebitCardSqlMapper mapper;
     private Connection connection;
 
-    public DebitCardDAO(
-            @Qualifier("debitCardsTableName") String tableName,
-            DebitCardSqlMapper mapper) {
-        this.tableName = tableName;
+    public DebitCardDAO(String debitCardsTableName) {
+        this.tableName = debitCardsTableName;
+    }
+
+    @Autowired
+    public void setMapper(DebitCardSqlMapper mapper) {
         this.mapper = mapper;
     }
 
@@ -32,7 +36,7 @@ public class DebitCardDAO extends AbstractDAO<DebitCard> {
     }
 
     @Override
-    public void update(DebitCard entity, Long aLong) throws Exception {
+    public void update(DebitCard entity, Long aLong) throws SQLException {
         String sqlQuery = "UPDATE ? SET ?,?,?,? WHERE ?";
         PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
         statement.setString(1, getTableName());

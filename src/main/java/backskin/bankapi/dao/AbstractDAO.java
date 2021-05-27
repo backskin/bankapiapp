@@ -2,31 +2,36 @@ package backskin.bankapi.dao;
 
 
 import backskin.bankapi.dao.mappers.AbstractSqlMapper;
-import backskin.bankapi.models.SqlModel;
-import lombok.Builder;
+import backskin.bankapi.models.AbstractModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-@Builder
 @Component
 @RequiredArgsConstructor
-public abstract class AbstractDAO<T extends SqlModel> implements SqlDAO<T> {
+public abstract class AbstractDAO<T extends AbstractModel> implements SqlDAO<T> {
 
-    @Builder.Default
-    private final String idColumnName = "ID";
     public abstract AbstractSqlMapper<T> getMapper();
 
     @Override
-    public void create(T entity) throws SQLException {
+    public T create(T entity) throws SQLException {
         String sqlQuery = "INSERT INTO ? (?) VALUES(?)";
         PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
         statement.setString(1, getTableName());
         statement.setString(2, entity.fields());
         statement.setString(3, entity.values());
-        statement.execute();
-        getConnection().commit();
+        statement.executeUpdate();
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+        if (generatedKeys.next()){
+            entity.setId(generatedKeys.getLong(1));
+            getConnection().commit();
+            return entity;
+        } else {
+            throw new SQLException("Entity creation failed");
+        }
     }
 
     @Override
@@ -38,7 +43,7 @@ public abstract class AbstractDAO<T extends SqlModel> implements SqlDAO<T> {
         ResultSet resultSet = statement.executeQuery();
         if (!resultSet.next()){
             throw new NullPointerException(
-                    String.format("Объект с (id=%d) в таблице '%s' не найден", id, getTableName()));
+                    String.format("Entity with id=%d in table='%s' not found", id, getTableName()));
         };
         T output = getMapper().map(resultSet);
         getConnection().commit();
@@ -52,7 +57,7 @@ public abstract class AbstractDAO<T extends SqlModel> implements SqlDAO<T> {
         statement.setString(1, getTableName());
         statement.setString(2, getMapper().getIdValidator().validationRule(entity.getId()));
         int i = statement.executeUpdate();
-        if (i == 0) throw new NullPointerException();
+        if (i == 0) throw new NullPointerException("Entity deletion failed");
         getConnection().commit();
     }
 }

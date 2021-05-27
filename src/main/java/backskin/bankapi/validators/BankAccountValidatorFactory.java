@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import java.math.BigDecimal;
 
 @Configuration
-public class BankAccountValidatorFactory extends ValidatorFactory {
+public class BankAccountValidatorFactory {
     @Bean
     public static Validator<BankAccount, String> byNumber(){
         return new Validator<>() {

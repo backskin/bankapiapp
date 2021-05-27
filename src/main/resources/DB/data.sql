@@ -1,0 +1,2 @@
+INSERT INTO bank_clients(full_name, phone_number, passport_id) VALUES ( 'Vlad', '+79967355322', 228218);
+INSERT INTO bank_accounts(number, bank_client_id, balance) VALUES ( '002010102501205', 1, 100.0);

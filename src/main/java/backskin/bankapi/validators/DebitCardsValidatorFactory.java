@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class DebitCardsValidatorFactory extends ValidatorFactory {
+public class DebitCardsValidatorFactory {
     @Bean
-    Validator<DebitCard, Long> byAccountId(){
+    Validator<DebitCard, Long> cardValidatorByAccountId(){
         return new Validator<>() {
             @Override
             public boolean validateObject(DebitCard object, Long tag) {
@@ -27,8 +27,8 @@ public class DebitCardsValidatorFactory extends ValidatorFactory {
         };
     }
     @Bean
-    @Qualifier("cardByNumber")
-    Validator<DebitCard, String> cardByNumber(){
+    @Qualifier("cardValidatorByNumber")
+    Validator<DebitCard, String> cardValidatorByNumber(){
         return new Validator<>() {
             @Override
             public boolean validateObject(DebitCard object, String tag) {
@@ -47,7 +47,8 @@ public class DebitCardsValidatorFactory extends ValidatorFactory {
         };
     }
     @Bean
-    Validator<DebitCard, String> byExpirationDate(){
+    @Qualifier("cardValidatorByExpirationDate")
+    Validator<DebitCard, String> cardValidatorByExpirationDate(){
         return new Validator<>() {
             @Override
             public boolean validateObject(DebitCard object, String tag) {
@@ -67,7 +68,8 @@ public class DebitCardsValidatorFactory extends ValidatorFactory {
     }
 
     @Bean
-    Validator<DebitCard, String> byCVVCode(){
+    @Qualifier("cardValidatorByCVVCode")
+    Validator<DebitCard, String> cardValidatorByCVVCode(){
         return new Validator<>() {
             @Override
             public boolean validateObject(DebitCard object, String tag) {

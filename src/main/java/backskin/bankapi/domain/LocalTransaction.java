@@ -15,10 +15,8 @@ public class LocalTransaction extends AbstractModel {
     private final BigDecimal transactionDifference;
     @NonNull
     private final Long bankAccountId;
-    @Builder.Default
     private final Timestamp date = Timestamp.from(Instant.now());
     @Setter
-    @Builder.Default
     private String details = "[{}]";
     @Builder
     public LocalTransaction(@NonNull Long id,

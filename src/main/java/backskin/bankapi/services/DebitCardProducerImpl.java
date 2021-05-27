@@ -18,7 +18,7 @@ public class DebitCardProducerImpl implements DebitCardProducer {
     private final Mapper<String, Calendar> dateOnCardMapper;
     private Integer lifetimeInYears;
 
-    public DebitCardProducerImpl(Mapper<String, Calendar> dateOnCardMapper,) {
+    public DebitCardProducerImpl(Mapper<String, Calendar> dateOnCardMapper) {
         this.dateOnCardMapper = dateOnCardMapper;
     }
 
@@ -33,12 +33,10 @@ public class DebitCardProducerImpl implements DebitCardProducer {
     }
 
     @Override
-    public DebitCardCredentials releaseDebitCard(Long accountId, Timestamp dateOfRelease) throws Exception {
+    public DebitCardCredentials releaseDebitCard(Long accountId, Timestamp dateOfRelease) {
         Calendar cal = Calendar.getInstance(timeZoneSupplier.get());
         cal.setTime(dateOfRelease);
         cal.add(Calendar.YEAR, lifetimeInYears);
-        String expirationDate = dateOnCardMapper.map(cal).orElseThrow(Exception::new);
-        return DebitCardCredentials.builder().cvvCode("777").expirationDate(
-               expirationDate).build();
+        return DebitCardCredentials.builder().cvvCode("777").expirationDate(dateOnCardMapper.map(cal)).build();
     }
 }

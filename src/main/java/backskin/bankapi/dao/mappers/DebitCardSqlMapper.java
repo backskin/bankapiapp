@@ -22,13 +22,13 @@ public class DebitCardSqlMapper extends AbstractSqlMapper<DebitCard> {
 
     public DebitCardSqlMapper(
             Validator<DebitCard, Long> accountIdValidator,
-            @Qualifier("cardByNumber") Validator<DebitCard, String> numberValidator,
-            @Qualifier("byExpirationDate") Validator<DebitCard, String> expirationDateValidator,
-            @Qualifier("byCVVCode") Validator<DebitCard, String> CVVCodeValidator) {
+            @Qualifier("cardValidatorByNumber") Validator<DebitCard, String> numberValidator,
+            @Qualifier("cardValidatorByExpirationDate") Validator<DebitCard, String> expirationDateValidator,
+            @Qualifier("cardValidatorByCVVCode") Validator<DebitCard, String> cvvCodeValidator) {
         this.accountIdValidator = accountIdValidator;
         this.numberValidator = numberValidator;
         this.expirationDateValidator = expirationDateValidator;
-        this.CVVCodeValidator = CVVCodeValidator;
+        this.CVVCodeValidator = cvvCodeValidator;
     }
 
     @Override

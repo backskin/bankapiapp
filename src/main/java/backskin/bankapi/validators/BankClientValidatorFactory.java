@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class BankClientValidatorFactory extends ValidatorFactory {
+public class BankClientValidatorFactory {
     @Bean
     Validator<BankClient, String> byFullName(){
         return new Validator<>() {

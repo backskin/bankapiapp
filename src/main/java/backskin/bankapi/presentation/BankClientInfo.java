@@ -5,13 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
-public class DebitCardCredentials {
-    private Long accountId;
-    private String number;
-    private String expirationDate;
-    private String cvvCode;
+public class BankClientInfo {
+    private String fullName;
+    @Builder.Default
+    private String phoneNumber = "8(800)555-35-35";
+    private Long passportId;
 }

@@ -15,20 +15,21 @@ import java.sql.SQLException;
 @Repository
 public class LocalTransactionDAO extends AbstractDAO<LocalTransaction> {
 
-    private final LocalTransactionSqlMapper mapper;
+    private LocalTransactionSqlMapper mapper;
     private final String tableName;
     private Connection connection;
 
+    @Autowired
+    public void setMapper(LocalTransactionSqlMapper mapper) {
+        this.mapper = mapper;
+    }
     @Autowired
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
 
-    public LocalTransactionDAO(
-            @Qualifier("localTransactionsTableName") String tableName,
-            LocalTransactionSqlMapper mapper) {
-        this.mapper = mapper;
-        this.tableName = tableName;
+    public LocalTransactionDAO(String localTransactionsTableName) {
+        this.tableName = localTransactionsTableName;
     }
 
     @Override

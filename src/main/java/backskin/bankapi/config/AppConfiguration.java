@@ -1,8 +1,5 @@
 package backskin.bankapi.config;
 
-import backskin.bankapi.domain.DebitCard;
-import backskin.bankapi.presentation.DebitCardCredentials;
-import backskin.bankapi.services.DebitCardProducer;
 import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,10 +11,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.function.Supplier;
 
 @Configuration
 public class AppConfiguration {
@@ -25,7 +18,7 @@ public class AppConfiguration {
     @Bean
     @Scope("singleton")
     DataSource dataSource(){
-        return new EmbeddedDatabaseBuilder()
+        return new EmbeddedDatabaseBuilder().setName("bank_database")
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("classpath:DB/schema.sql")
                 .addScript("classpath:DB/data.sql").build();

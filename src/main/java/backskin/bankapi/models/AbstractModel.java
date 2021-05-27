@@ -11,8 +11,9 @@ import java.io.Serializable;
  * Any model, eventually, has an id.
  */
 @Getter
-@RequiredArgsConstructor
+@Setter
+@AllArgsConstructor
 public abstract class AbstractModel implements Serializable, SqlModel {
     @NonNull
-    private final Long id;
+    private Long id = 0L;
 }

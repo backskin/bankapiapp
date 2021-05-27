@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Primary;
 public class ValidatorFactory {
     @Bean
     @Primary
-    public Validator<AbstractModel, Long> byId(){
+    public Validator<AbstractModel, Long> entityValidatorById(){
         return new Validator<>() {
             @Override
             public boolean validateObject(AbstractModel object, Long tag) {

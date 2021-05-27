@@ -15,7 +15,7 @@ import java.sql.SQLException;
 @Getter
 @Repository
 public class BankAccountDAO extends AbstractDAO<BankAccount> {
-    private final String tableName;
+    private final String bankAccountsTableName;
     BankAccountSqlMapper mapper;
     private Connection connection;
 
@@ -25,13 +25,18 @@ public class BankAccountDAO extends AbstractDAO<BankAccount> {
     }
 
     @Override
+    public String getTableName() {
+        return bankAccountsTableName;
+    }
+
+    @Override
     public AbstractSqlMapper<BankAccount> getMapper() {
         return mapper;
     }
 
     @Autowired
-    public BankAccountDAO(@Qualifier("bankAccountsTableName") String tableName) {
-        this.tableName = tableName;
+    public BankAccountDAO(String bankAccountsTableName) {
+        this.bankAccountsTableName = bankAccountsTableName;
     }
 
     @Autowired
@@ -43,7 +48,7 @@ public class BankAccountDAO extends AbstractDAO<BankAccount> {
     public void update(BankAccount entity, Long id) throws SQLException {
         String sqlQuery = "UPDATE ? SET ?,?,? WHERE ?";
         PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
-        statement.setString(1, getTableName());
+        statement.setString(1, getBankAccountsTableName());
         statement.setString(2,
                mapper.getNumberValidator().validationRule(entity.getNumber()));
         statement.setString(3,

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 
 @Getter
@@ -23,18 +24,17 @@ public class BankClientDAO extends AbstractDAO<BankClient> {
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
-
     @Autowired
     public void setMapper(BankClientSqlMapper mapper) {
         this.mapper = mapper;
     }
 
-    public BankClientDAO(@Qualifier("bankClientsTableName") String tableName) {
-        this.tableName = tableName;
+    public BankClientDAO(String bankClientsTableName) {
+        this.tableName = bankClientsTableName;
     }
 
     @Override
-    public void update(BankClient entity, Long aLong) throws Exception {
+    public void update(BankClient entity, Long aLong) throws SQLException {
         String sqlQuery = "UPDATE ? SET ?,?,? WHERE ?";
         PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
 
