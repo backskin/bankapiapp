@@ -1,4 +1,4 @@
-package backskin.entities;
+package backskin.bankapi.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,13 +7,16 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 @Getter
 @Builder(builderClassName = "LocalTransactionBuilder")
-public class AccountLocalTransactionEntity extends BaseEntity{
+public class AccountLocalTransaction extends AbstractModel {
     private final BigDecimal transactionDifference;
     private final BigInteger bankAccountId;
-    private final Timestamp date;
+    @Builder.Default
+    private final Timestamp date = Timestamp.from(Instant.now());
     @Setter
-    private String details;
+    @Builder.Default
+    private String details = "[{}]";
 }

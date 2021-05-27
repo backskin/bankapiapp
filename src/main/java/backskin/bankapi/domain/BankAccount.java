@@ -1,4 +1,4 @@
-package backskin.entities;
+package backskin.bankapi.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import java.math.BigInteger;
 
 @Getter
 @Builder(builderClassName = "BankAccountBuilder")
-public class BankAccountEntity extends BaseEntity{
+public class BankAccount extends AbstractModel {
     private final String number;
     @Setter
     private BigInteger bankClientId;
