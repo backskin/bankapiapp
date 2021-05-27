@@ -25,7 +25,7 @@ CREATE TABLE bank_accounts(
 */
 CREATE TABLE debit_cards(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    bank_account_id BIGINT, -- one to many
+    bank_account_id Long, -- one to many
     number VARCHAR(20) NOT NULL,
     expiration_date VARCHAR(4) NOT NULL,
     cvv_code VARCHAR(3) NOT NULL,
@@ -37,9 +37,9 @@ CREATE TABLE debit_cards(
     Account's Local Transactions Table.
     One account may have many transactions.
 */
-CREATE TABLE account_local_transactions(
+CREATE TABLE local_transactions(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    bank_account_id BIGINT NOT NULL, -- one to many
+    bank_account_id Long NOT NULL, -- one to many
     difference DECIMAL NOT NULL,
     date TIMESTAMP NOT NULL,
     details VARCHAR(255),

@@ -2,14 +2,9 @@ package backskin.bankapi.dao.mappers;
 
 import backskin.bankapi.dao.Validator;
 import backskin.bankapi.domain.BankAccount;
-import backskin.bankapi.models.AbstractModel;
-import backskin.bankapi.validators.ValidatorFactory;
-import backskin.bankapi.validators.BankAccountValidatorFactory;
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -17,17 +12,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
-@Qualifier("bankAccount")
 public class BankAccountMapper extends AbstractMapper<BankAccount> {
-    @Qualifier("byNumber")
+
     @Getter
-    private Validator<BankAccount, String> numberValidator;
-    @Qualifier("byClientId")
+    private final Validator<BankAccount, String> numberValidator;
     @Getter
-    private Validator<BankAccount, Long> clientIdValidator;
-    @Qualifier("byBalance")
+    private final Validator<BankAccount, Long> clientIdValidator;
     @Getter
-    private Validator<BankAccount, BigDecimal> balanceValidator;
+    private final Validator<BankAccount, BigDecimal> balanceValidator;
+
+    public BankAccountMapper(
+            Validator<BankAccount, String> numberValidator,
+            Validator<BankAccount, Long> clientIdValidator,
+            @Qualifier("byBalance") Validator<BankAccount, BigDecimal> balanceValidator) {
+        this.numberValidator = numberValidator;
+        this.clientIdValidator = clientIdValidator;
+        this.balanceValidator = balanceValidator;
+    }
+
     @Override
     public BankAccount map(ResultSet resultSet) throws SQLException {
         return BankAccount.builder()

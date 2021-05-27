@@ -9,8 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BankClientValidatorFactory extends ValidatorFactory {
     @Bean
-    @Qualifier("fullName")
-    Validator<BankClient, String> getFullNameValidator(){
+    Validator<BankClient, String> byFullName(){
         return new Validator<>() {
             @Override
             public boolean validateObject(BankClient object, String tag) {
@@ -30,8 +29,7 @@ public class BankClientValidatorFactory extends ValidatorFactory {
     }
 
     @Bean
-    @Qualifier("phoneNumber")
-    Validator<BankClient, String> getPhoneNumberValidator(){
+    Validator<BankClient, String> byPhoneNumber(){
         return new Validator<>() {
             @Override
             public boolean validateObject(BankClient object, String tag) {
@@ -51,8 +49,7 @@ public class BankClientValidatorFactory extends ValidatorFactory {
     }
 
     @Bean
-    @Qualifier("passportId")
-    Validator<BankClient, Long> getPassportIdValidator(){
+    Validator<BankClient, Long> byPassportId(){
         return new Validator<>() {
             @Override
             public boolean validateObject(BankClient object, Long tag) {

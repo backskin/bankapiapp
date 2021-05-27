@@ -1,6 +1,5 @@
 package backskin.bankapi.models;
 
-import backskin.bankapi.models.DatabaseModel;
 import lombok.*;
 
 import java.io.Serializable;
@@ -14,7 +13,7 @@ import java.io.Serializable;
 @Setter
 @Getter
 @RequiredArgsConstructor
-public abstract class AbstractModel implements Serializable, DatabaseModel {
+public abstract class AbstractModel implements Serializable, SqlModel {
     @NonNull
     private final Long id;
 }

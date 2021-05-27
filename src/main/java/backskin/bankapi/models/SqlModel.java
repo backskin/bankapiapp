@@ -1,6 +1,6 @@
 package backskin.bankapi.models;
 
-public interface DatabaseModel {
+public interface SqlModel {
     String fields();
     String values();
 }

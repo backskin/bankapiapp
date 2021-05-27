@@ -5,12 +5,12 @@ public interface Validator<ObjectType, TagType> {
     TagType extractTag(ObjectType objectType);
     String tagName();
     default String validationRule(TagType tag){
-        String tagName;
+        String tagValue;
         if (tag instanceof String) {
-            tagName = "'"+tagName()+"'";
+            tagValue = "'"+tag+"'";
         } else {
-            tagName = tagName();
+            tagValue = tag.toString();
         }
-        return tagName + " = " + tag.toString();
-    };
+        return tagName() + " = " + tagValue;
+    }
 }

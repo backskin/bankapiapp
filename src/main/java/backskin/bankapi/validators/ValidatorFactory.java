@@ -4,11 +4,13 @@ import backskin.bankapi.dao.Validator;
 import backskin.bankapi.models.AbstractModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class ValidatorFactory {
     @Bean
-    public static Validator<AbstractModel, Long> byId(){
+    @Primary
+    public Validator<AbstractModel, Long> byId(){
         return new Validator<>() {
             @Override
             public boolean validateObject(AbstractModel object, Long tag) {

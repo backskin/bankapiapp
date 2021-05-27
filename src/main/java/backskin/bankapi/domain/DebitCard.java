@@ -20,6 +20,7 @@ public class DebitCard extends AbstractModel {
     private final String expirationDate;
     private final String cvvCode;
 
+    @Builder
     public DebitCard(Long id, String number, Long bankAccountId, String expirationDate, String cvvCode) {
         super(id);
         this.number = number;

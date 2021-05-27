@@ -46,4 +46,9 @@ public class AppConfiguration {
     String debitCardsTableName(){
         return "debit_cards";
     }
+
+    @Bean
+    String localTransactionsTableName(){
+        return "local_transactions";
+    }
 }

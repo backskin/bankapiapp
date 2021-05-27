@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Configuration
 public class BankAccountValidatorFactory extends ValidatorFactory {
     @Bean
-    @Qualifier("number")
+    @Qualifier()
     public static Validator<BankAccount, String> byNumber(){
         return new Validator<>() {
             @Override
@@ -32,7 +32,6 @@ public class BankAccountValidatorFactory extends ValidatorFactory {
     }
 
     @Bean
-    @Qualifier("bankClientId")
     public static Validator<BankAccount, Long> byClientId(){
         return new Validator<>() {
             @Override
@@ -53,8 +52,7 @@ public class BankAccountValidatorFactory extends ValidatorFactory {
     }
 
     @Bean
-    @Qualifier("balanceMoreOrEqual")
-    public static Validator<BankAccount, BigDecimal> getBalanceMoreOrEqualValidator(){
+    public static Validator<BankAccount, BigDecimal> byBalanceMoreOrEqual(){
          return new Validator<>() {
              @Override
              public boolean validateObject(BankAccount object, BigDecimal tag) {
@@ -76,9 +74,8 @@ public class BankAccountValidatorFactory extends ValidatorFactory {
                  return tagName() + ">="+tag.toString();
              }
          };
-    };
+    }
     @Bean
-    @Qualifier("balance")
     public static Validator<BankAccount, BigDecimal> byBalance(){
         return new Validator<>() {
             @Override
