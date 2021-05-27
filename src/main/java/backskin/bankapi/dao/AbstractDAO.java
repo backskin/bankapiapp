@@ -12,7 +12,7 @@ import java.sql.*;
 @Builder
 @Component
 @RequiredArgsConstructor
-public abstract class AbstractDAO<T extends SqlModel> implements CRUD<T,Long>, SqlDAO<T> {
+public abstract class AbstractDAO<T extends SqlModel> implements SqlDAO<T> {
 
     @Builder.Default
     private final String idColumnName = "ID";

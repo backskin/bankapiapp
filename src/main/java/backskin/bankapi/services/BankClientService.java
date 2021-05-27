@@ -1,4 +1,4 @@
-package backskin.bankapi.service;
+package backskin.bankapi.services;
 
 import org.springframework.stereotype.Service;
 

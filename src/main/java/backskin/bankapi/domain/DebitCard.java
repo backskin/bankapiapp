@@ -3,6 +3,7 @@ package backskin.bankapi.domain;
 import backskin.bankapi.models.AbstractModel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Debit Card Class
@@ -13,7 +14,8 @@ import lombok.Getter;
 @Getter
 public class DebitCard extends AbstractModel {
     private final String number;
-    private final Long bankAccountId;
+    @Setter
+    private Long bankAccountId;
     private final String expirationDate;
     private final String cvvCode;
 
