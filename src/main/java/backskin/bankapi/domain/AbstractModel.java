@@ -15,7 +15,6 @@ import java.io.Serializable;
 @Setter
 @Getter
 @AllArgsConstructor
-public abstract class AbstractModel implements Serializable {
+public abstract class AbstractModel implements Serializable, DatabaseModel {
     private final Long id;
-
 }

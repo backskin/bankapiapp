@@ -19,4 +19,24 @@ public class AccountLocalTransaction extends AbstractModel {
     @Setter
     @Builder.Default
     private String details = "[{}]";
+
+    @Override
+    public String fields() {
+        return String.join(",",
+                "id",
+                "bank_account_id",
+                "difference",
+                "date",
+                "details");
+    }
+
+    @Override
+    public String values() {
+        return String.join(",",
+                getId().toString(),
+                bankAccountId.toString(),
+                transactionDifference.toString(),
+                date.toString(),
+                details);
+    }
 }

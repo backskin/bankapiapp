@@ -18,4 +18,14 @@ public class DebitCard extends AbstractModel {
     private final BigInteger bankAccountId;
     private final String expirationDate;
     private final String cvvCode;
+
+    @Override
+    public String fields() {
+        return String.join(",");
+    }
+
+    @Override
+    public String values() {
+        return null;
+    }
 }

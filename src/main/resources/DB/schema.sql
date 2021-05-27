@@ -13,8 +13,8 @@ CREATE TABLE bank_clients(
 */
 CREATE TABLE bank_accounts(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    bank_client_id BIGINT NOT NULL, -- one to many
     number VARCHAR(24) NOT NULL,
+    bank_client_id BIGINT NOT NULL, -- one to many
     balance DECIMAL,
     CONSTRAINT bank_accounts_client_fk
     FOREIGN KEY (bank_client_id) REFERENCES bank_clients(id) ON DELETE CASCADE
