@@ -1,7 +1,7 @@
 package backskin.bankapi.validators;
 
-import backskin.bankapi.dao.Validator;
 import backskin.bankapi.domain.DebitCard;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,7 +27,8 @@ public class DebitCardsValidatorFactory extends ValidatorFactory {
         };
     }
     @Bean
-    Validator<DebitCard, String> byNumber(){
+    @Qualifier("cardByNumber")
+    Validator<DebitCard, String> cardByNumber(){
         return new Validator<>() {
             @Override
             public boolean validateObject(DebitCard object, String tag) {

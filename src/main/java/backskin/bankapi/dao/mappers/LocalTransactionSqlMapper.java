@@ -1,6 +1,6 @@
 package backskin.bankapi.dao.mappers;
 
-import backskin.bankapi.dao.Validator;
+import backskin.bankapi.validators.Validator;
 import backskin.bankapi.domain.LocalTransaction;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 @Component
-public class LocalTransactionMapper extends AbstractMapper<LocalTransaction> {
+public class LocalTransactionSqlMapper extends AbstractSqlMapper<LocalTransaction> {
     @Getter
     private final Validator<LocalTransaction, Long> accountIdValidator;
     @Getter
@@ -21,10 +21,10 @@ public class LocalTransactionMapper extends AbstractMapper<LocalTransaction> {
     @Getter
     private final Validator<LocalTransaction, String> detailsValidator;
 
-    public LocalTransactionMapper(Validator<LocalTransaction, Long> accountIdValidator,
-                                  Validator<LocalTransaction, BigDecimal> differenceValidator,
-                                  Validator<LocalTransaction, Timestamp> dateValidator,
-                                  Validator<LocalTransaction, String> detailsValidator) {
+    public LocalTransactionSqlMapper(Validator<LocalTransaction, Long> accountIdValidator,
+                                     Validator<LocalTransaction, BigDecimal> differenceValidator,
+                                     Validator<LocalTransaction, Timestamp> dateValidator,
+                                     Validator<LocalTransaction, String> detailsValidator) {
         this.accountIdValidator = accountIdValidator;
         this.differenceValidator = differenceValidator;
         this.dateValidator = dateValidator;

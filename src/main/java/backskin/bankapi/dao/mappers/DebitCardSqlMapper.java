@@ -1,21 +1,16 @@
 package backskin.bankapi.dao.mappers;
 
-import backskin.bankapi.dao.Validator;
+import backskin.bankapi.validators.Validator;
 import backskin.bankapi.domain.DebitCard;
 import lombok.Getter;
-import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
-public class DebitCardMapper extends AbstractMapper<DebitCard> {
-
+public class DebitCardSqlMapper extends AbstractSqlMapper<DebitCard> {
     @Getter
     private final Validator<DebitCard, Long> accountIdValidator;
     @Getter
@@ -25,9 +20,9 @@ public class DebitCardMapper extends AbstractMapper<DebitCard> {
     @Getter
     private final Validator<DebitCard, String> CVVCodeValidator;
 
-    public DebitCardMapper(
+    public DebitCardSqlMapper(
             Validator<DebitCard, Long> accountIdValidator,
-            @Qualifier("byNumber") Validator<DebitCard, String> numberValidator,
+            @Qualifier("cardByNumber") Validator<DebitCard, String> numberValidator,
             @Qualifier("byExpirationDate") Validator<DebitCard, String> expirationDateValidator,
             @Qualifier("byCVVCode") Validator<DebitCard, String> CVVCodeValidator) {
         this.accountIdValidator = accountIdValidator;

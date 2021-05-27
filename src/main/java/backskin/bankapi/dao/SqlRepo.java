@@ -1,18 +1,22 @@
 package backskin.bankapi.dao;
 
 import backskin.bankapi.models.AbstractModel;
+import backskin.bankapi.validators.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractRepo<T extends AbstractModel> implements Repo<T>, SqlDAO<T> {
+public interface SqlRepo<T extends AbstractModel> extends Repo<T>, SqlDAO<T> {
 
-    protected abstract List<T> createContainer();
+    default List<T> createContainer(){
+        return new ArrayList<>();
+    };
 
     @Override
-    public List<T> getAll() throws SQLException {
+    default List<T> getAll() throws SQLException {
         List<T> container = createContainer();
         String sqlQuery = "SELECT * FROM ?";
         PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
@@ -26,7 +30,7 @@ public abstract class AbstractRepo<T extends AbstractModel> implements Repo<T>, 
     }
 
     @Override
-    public <Tag> List<T> findAll(Validator<T, Tag> validator, Tag tagValue) throws SQLException {
+    default  <Tag> List<T> findAll(Validator<T, Tag> validator, Tag tagValue) throws SQLException {
         List<T> container = createContainer();
         String sqlQuery = "SELECT * FROM ? WHERE ?";
         PreparedStatement statement = getConnection().prepareStatement(sqlQuery);

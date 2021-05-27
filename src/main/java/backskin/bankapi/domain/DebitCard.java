@@ -1,11 +1,8 @@
 package backskin.bankapi.domain;
 
 import backskin.bankapi.models.AbstractModel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.math.BigInteger;
 
 /**
  * Debit Card Class
@@ -31,11 +28,11 @@ public class DebitCard extends AbstractModel {
 
     @Override
     public String fields() {
-        return String.join(",");
+        return String.join(",", "number", "bank_account_id", "expiration_date", "cvv_code");
     }
 
     @Override
     public String values() {
-        return null;
+        return String.join(",", number, bankAccountId.toString(), expirationDate, cvvCode);
     }
 }

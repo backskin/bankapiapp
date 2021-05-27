@@ -1,5 +1,7 @@
 package backskin.bankapi.config;
 
+import backskin.bankapi.domain.DebitCard;
+import backskin.bankapi.service.DebitCardProducer;
 import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +33,15 @@ public class AppConfiguration {
         Connection connection = dataSource.getConnection();
         connection.setAutoCommit(false);
         return connection;
+    }
+    @Bean
+    DebitCardProducer debitCardProducer(){
+        return new DebitCardProducer() {
+            @Override
+            public DebitCard releaseDebitCard() {
+//                return DebitCard.builder().;
+            }
+        }
     }
     @Bean
     String bankClientsTableName(){

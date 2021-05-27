@@ -1,6 +1,6 @@
 package backskin.bankapi.dao;
 
-import backskin.bankapi.dao.mappers.DebitCardMapper;
+import backskin.bankapi.dao.mappers.DebitCardSqlMapper;
 import backskin.bankapi.domain.DebitCard;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +16,12 @@ import java.sql.PreparedStatement;
 public class DebitCardDAO extends AbstractDAO<DebitCard> {
 
     private final String tableName;
-    private final DebitCardMapper mapper;
+    private final DebitCardSqlMapper mapper;
     private Connection connection;
 
     public DebitCardDAO(
             @Qualifier("debitCardsTableName") String tableName,
-            DebitCardMapper mapper) {
+            DebitCardSqlMapper mapper) {
         this.tableName = tableName;
         this.mapper = mapper;
     }

@@ -1,8 +1,6 @@
 package backskin.bankapi.validators;
 
-import backskin.bankapi.dao.Validator;
 import backskin.bankapi.domain.BankClient;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

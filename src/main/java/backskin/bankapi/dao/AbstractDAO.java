@@ -1,11 +1,10 @@
 package backskin.bankapi.dao;
 
 
-import backskin.bankapi.dao.mappers.AbstractMapper;
-import backskin.bankapi.models.AbstractModel;
+import backskin.bankapi.dao.mappers.AbstractSqlMapper;
+import backskin.bankapi.models.SqlModel;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -13,12 +12,11 @@ import java.sql.*;
 @Builder
 @Component
 @RequiredArgsConstructor
-public abstract class AbstractDAO<T extends AbstractModel> implements CRUD<T,Long>, SqlDAO<T> {
+public abstract class AbstractDAO<T extends SqlModel> implements CRUD<T,Long>, SqlDAO<T> {
 
     @Builder.Default
     private final String idColumnName = "ID";
-
-    public abstract AbstractMapper<T> getMapper();
+    public abstract AbstractSqlMapper<T> getMapper();
 
     @Override
     public void create(T entity) throws SQLException {
@@ -32,25 +30,29 @@ public abstract class AbstractDAO<T extends AbstractModel> implements CRUD<T,Lon
     }
 
     @Override
-    public T read(Long id) throws SQLException {
+    public T read(Long id) throws SQLException, NullPointerException {
         String sqlQuery = "SELECT * FROM ? WHERE ?";
         PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
         statement.setString(1, getTableName());
         statement.setString(2, getMapper().getIdValidator().validationRule(id));
         ResultSet resultSet = statement.executeQuery();
-        resultSet.next();
+        if (!resultSet.next()){
+            throw new NullPointerException(
+                    String.format("Объект с (id=%d) в таблице '%s' не найден", id, getTableName()));
+        };
         T output = getMapper().map(resultSet);
         getConnection().commit();
         return output;
     }
 
     @Override
-    public void delete(T entity) throws SQLException {
+    public void delete(T entity) throws SQLException, NullPointerException {
         String sqlQuery = "DELETE FROM ? WHERE ?";
         PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
         statement.setString(1, getTableName());
         statement.setString(2, getMapper().getIdValidator().validationRule(entity.getId()));
-        statement.execute();
+        int i = statement.executeUpdate();
+        if (i == 0) throw new NullPointerException();
         getConnection().commit();
     }
 }

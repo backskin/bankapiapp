@@ -10,7 +10,6 @@ import java.io.Serializable;
  * Describes any data model stored in the database.
  * Any model, eventually, has an id.
  */
-@Setter
 @Getter
 @RequiredArgsConstructor
 public abstract class AbstractModel implements Serializable, SqlModel {

@@ -1,9 +1,8 @@
 package backskin.bankapi.dao.mappers;
 
-import backskin.bankapi.dao.Validator;
+import backskin.bankapi.validators.Validator;
 import backskin.bankapi.domain.BankAccount;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
-public class BankAccountMapper extends AbstractMapper<BankAccount> {
+public class BankAccountSqlMapper extends AbstractSqlMapper<BankAccount> {
 
     @Getter
     private final Validator<BankAccount, String> numberValidator;
@@ -21,7 +20,7 @@ public class BankAccountMapper extends AbstractMapper<BankAccount> {
     @Getter
     private final Validator<BankAccount, BigDecimal> balanceValidator;
 
-    public BankAccountMapper(
+    public BankAccountSqlMapper(
             Validator<BankAccount, String> numberValidator,
             Validator<BankAccount, Long> clientIdValidator,
             @Qualifier("byBalance") Validator<BankAccount, BigDecimal> balanceValidator) {

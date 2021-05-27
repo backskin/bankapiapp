@@ -1,4 +1,4 @@
-package backskin.bankapi.dao;
+package backskin.bankapi.validators;
 
 public interface Validator<ObjectType, TagType> {
     boolean validateObject(ObjectType object, TagType tag);

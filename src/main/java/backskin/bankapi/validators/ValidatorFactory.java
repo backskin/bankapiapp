@@ -1,6 +1,5 @@
 package backskin.bankapi.validators;
 
-import backskin.bankapi.dao.Validator;
 import backskin.bankapi.models.AbstractModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

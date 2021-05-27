@@ -1,6 +1,6 @@
 package backskin.bankapi.dao.mappers;
 
-import backskin.bankapi.dao.Validator;
+import backskin.bankapi.validators.Validator;
 import backskin.bankapi.domain.BankClient;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
-public class BankClientMapper extends AbstractMapper<BankClient> {
+public class BankClientSqlMapper extends AbstractSqlMapper<BankClient> {
 
     @Getter
     private final Validator<BankClient, String> fullNameValidator;
@@ -19,9 +19,9 @@ public class BankClientMapper extends AbstractMapper<BankClient> {
     @Getter
     private final Validator<BankClient, String> phoneNumberValidator;
 
-    public BankClientMapper(@Qualifier("byFullName") Validator<BankClient, String> fullNameValidator,
-                            Validator<BankClient, Long> passportIdValidator,
-                            @Qualifier("byPhoneNumber") Validator<BankClient, String> phoneNumberValidator) {
+    public BankClientSqlMapper(@Qualifier("byFullName") Validator<BankClient, String> fullNameValidator,
+                               Validator<BankClient, Long> passportIdValidator,
+                               @Qualifier("byPhoneNumber") Validator<BankClient, String> phoneNumberValidator) {
         this.fullNameValidator = fullNameValidator;
         this.passportIdValidator = passportIdValidator;
         this.phoneNumberValidator = phoneNumberValidator;

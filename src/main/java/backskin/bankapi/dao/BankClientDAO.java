@@ -1,6 +1,6 @@
 package backskin.bankapi.dao;
 
-import backskin.bankapi.dao.mappers.BankClientMapper;
+import backskin.bankapi.dao.mappers.BankClientSqlMapper;
 import backskin.bankapi.domain.BankClient;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class BankClientDAO extends AbstractDAO<BankClient> {
 
     private Connection connection;
     private final String tableName;
-    private BankClientMapper mapper;
+    private BankClientSqlMapper mapper;
 
     @Autowired
     public void setConnection(Connection connection) {
@@ -25,7 +25,7 @@ public class BankClientDAO extends AbstractDAO<BankClient> {
     }
 
     @Autowired
-    public void setMapper(BankClientMapper mapper) {
+    public void setMapper(BankClientSqlMapper mapper) {
         this.mapper = mapper;
     }
 

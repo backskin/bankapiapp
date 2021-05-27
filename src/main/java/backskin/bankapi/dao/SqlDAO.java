@@ -1,12 +1,12 @@
 package backskin.bankapi.dao;
 
 import backskin.bankapi.dao.mappers.SqlMapper;
+import backskin.bankapi.models.SqlModel;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 
-public interface SqlDAO<T>{
+public interface SqlDAO<T extends SqlModel>{
     String getTableName();
     Connection getConnection();
-    SqlMapper<T, ResultSet> getMapper();
+    SqlMapper<T> getMapper();
 }

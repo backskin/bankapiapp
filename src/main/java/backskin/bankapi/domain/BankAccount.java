@@ -5,11 +5,17 @@ import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 @Getter
 public class BankAccount extends AbstractModel {
 
+    @NonNull
+    private final String number;
+    @Setter
+    @NonNull
+    private Long bankClientId;
+    @Setter
+    private BigDecimal balance;
     @Builder(builderClassName = "BankAccountBuilder")
     public BankAccount(@NotNull Long id,
                        @NotNull String number,
@@ -21,18 +27,9 @@ public class BankAccount extends AbstractModel {
         this.balance = balance;
     }
 
-    @NonNull
-    private final String number;
-    @Setter
-    @NonNull
-    private Long bankClientId;
-    @Setter
-    private BigDecimal balance;
-
     @Override
     public String fields() {
         return String.join(",",
-                "id",
                 "number",
                 "bank_client_id",
                 "balance");

@@ -1,7 +1,6 @@
 package backskin.bankapi.dao;
 
-import backskin.bankapi.dao.mappers.AbstractMapper;
-import backskin.bankapi.dao.mappers.LocalTransactionMapper;
+import backskin.bankapi.dao.mappers.LocalTransactionSqlMapper;
 import backskin.bankapi.domain.LocalTransaction;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import java.sql.SQLException;
 @Repository
 public class LocalTransactionDAO extends AbstractDAO<LocalTransaction> {
 
-    private final LocalTransactionMapper mapper;
+    private final LocalTransactionSqlMapper mapper;
     private final String tableName;
     private Connection connection;
 
@@ -27,7 +26,7 @@ public class LocalTransactionDAO extends AbstractDAO<LocalTransaction> {
 
     public LocalTransactionDAO(
             @Qualifier("localTransactionsTableName") String tableName,
-            LocalTransactionMapper mapper) {
+            LocalTransactionSqlMapper mapper) {
         this.mapper = mapper;
         this.tableName = tableName;
     }

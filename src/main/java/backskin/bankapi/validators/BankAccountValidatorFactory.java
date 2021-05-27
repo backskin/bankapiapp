@@ -1,6 +1,5 @@
 package backskin.bankapi.validators;
 
-import backskin.bankapi.dao.Validator;
 import backskin.bankapi.domain.BankAccount;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +10,6 @@ import java.math.BigDecimal;
 @Configuration
 public class BankAccountValidatorFactory extends ValidatorFactory {
     @Bean
-    @Qualifier()
     public static Validator<BankAccount, String> byNumber(){
         return new Validator<>() {
             @Override
