@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Calendar;
 
 /**
- * The type Mapper factory.
+ * The Mappers' factory (Actually, it's a Mappers' _Bean_ factory.
+ * And yet, not a pattern factory.).
  */
 @Configuration
 public class MapperFactory {
@@ -20,7 +21,7 @@ public class MapperFactory {
      * @return the mapper
      */
     @Bean
-    Mapper<DebitCardInfo, DebitCard> infoDebitCardMapper(){
+    public Mapper<DebitCardInfo, DebitCard> infoDebitCardMapper(){
         return debitCard -> DebitCardInfo.builder().number(debitCard.getNumber()).Id(debitCard.getId()).build();
     }
 
@@ -30,7 +31,7 @@ public class MapperFactory {
      * @return the mapper
      */
     @Bean
-    Mapper<String, Calendar> timeToCardDateMapper(){
+    public Mapper<String, Calendar> timeToCardDateMapper(){
         return calendar -> "'"+String.format("%02d",calendar.get(Calendar.MONTH))
                 + "/" + String.valueOf(calendar.get(Calendar.YEAR)).substring(2)+"'";
     }
@@ -41,7 +42,7 @@ public class MapperFactory {
      * @return the mapper
      */
     @Bean
-    Mapper<BankAccountInfo, BankAccount> infoBankAccountMapper(){
+    public Mapper<BankAccountInfo, BankAccount> infoBankAccountMapper(){
         return bankAccount -> BankAccountInfo.builder()
                 .id(bankAccount.getId())
                 .number(bankAccount.getNumber())
@@ -55,7 +56,7 @@ public class MapperFactory {
      * @return the mapper
      */
     @Bean
-    Mapper<BankClientInfo, BankClient> infoBankClientMapper(){
+    public Mapper<BankClientInfo, BankClient> infoBankClientMapper(){
         return bankClient -> BankClientInfo.builder().fullName(bankClient.getFullName())
                 .phoneNumber(bankClient.getPhoneNumber()).build();
     }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Debit card controller.
+ * The Debit Cards Controller.
  */
 @RestController
 @RequestMapping("/api/v1/debitcards")

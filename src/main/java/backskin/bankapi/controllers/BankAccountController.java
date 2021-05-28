@@ -13,7 +13,7 @@ import java.time.Instant;
 import java.util.List;
 
 /**
- * The type Bank account controller.
+ * The Bank Accounts Controller.
  */
 @RestController
 @RequestMapping(value = "/api/v1/accounts", produces = MediaType.APPLICATION_JSON_VALUE)

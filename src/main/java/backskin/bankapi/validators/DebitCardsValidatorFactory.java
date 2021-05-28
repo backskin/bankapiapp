@@ -16,7 +16,7 @@ public class DebitCardsValidatorFactory {
      * @return the validator
      */
     @Bean
-    Validator<DebitCard, Long> cardValidatorByAccountId(){
+    public Validator<DebitCard, Long> cardValidatorByAccountId(){
         return new Validator<>() {
             @Override
             public boolean validateObject(DebitCard object, Long tag) {
@@ -42,7 +42,7 @@ public class DebitCardsValidatorFactory {
      */
     @Bean
     @Qualifier("cardValidatorByNumber")
-    Validator<DebitCard, String> cardValidatorByNumber(){
+    public Validator<DebitCard, String> cardValidatorByNumber(){
         return new Validator<>() {
             @Override
             public boolean validateObject(DebitCard object, String tag) {
@@ -68,7 +68,7 @@ public class DebitCardsValidatorFactory {
      */
     @Bean
     @Qualifier("cardValidatorByExpirationDate")
-    Validator<DebitCard, String> cardValidatorByExpirationDate(){
+    public Validator<DebitCard, String> cardValidatorByExpirationDate(){
         return new Validator<>() {
             @Override
             public boolean validateObject(DebitCard object, String tag) {
@@ -94,7 +94,7 @@ public class DebitCardsValidatorFactory {
      */
     @Bean
     @Qualifier("cardValidatorByCVVCode")
-    Validator<DebitCard, String> cardValidatorByCVVCode(){
+    public Validator<DebitCard, String> cardValidatorByCVVCode(){
         return new Validator<>() {
             @Override
             public boolean validateObject(DebitCard object, String tag) {

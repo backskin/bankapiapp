@@ -13,19 +13,19 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * The type App configuration.
+ * Base App configuration class
  */
 @Configuration
 public class AppConfiguration {
 
     /**
-     * Data source data source.
+     * Bean - Data source  producer
      *
      * @return the data source
      */
     @Bean
     @Scope("singleton")
-    DataSource dataSource(){
+    public DataSource dataSource(){
         return new EmbeddedDatabaseBuilder().setName("bank_database")
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("classpath:DB/schema.sql")
@@ -33,7 +33,7 @@ public class AppConfiguration {
     }
 
     /**
-     * Connection connection.
+     * Bean - Production of a connection to the DB
      *
      * @param dataSource the data source
      * @return the connection
@@ -42,49 +42,49 @@ public class AppConfiguration {
     @Bean
     @Autowired
     @Synchronized
-    Connection connection(DataSource dataSource) throws SQLException {
+    public Connection connection(DataSource dataSource) throws SQLException {
         Connection connection = dataSource.getConnection();
         connection.setAutoCommit(false);
         return connection;
     }
 
     /**
-     * Bank clients table name string.
+     * Bean - Bank clients table name string.
      *
-     * @return the string
+     * @return Bank clients table name
      */
     @Bean
-    String bankClientsTableName(){
+    public String bankClientsTableName(){
         return "bank_clients";
     }
 
     /**
-     * Bank accounts table name string.
+     * Bean - Bank accounts table name string.
      *
-     * @return the string
+     * @return Bank accounts table name
      */
     @Bean
-    String bankAccountsTableName(){
+    public String bankAccountsTableName(){
         return "bank_accounts";
     }
 
     /**
-     * Debit cards table name string.
+     * Bean -  Debit cards table name string.
      *
-     * @return the string
+     * @return Debit cards table name
      */
     @Bean
-    String debitCardsTableName(){
+    public String debitCardsTableName(){
         return "debit_cards";
     }
 
     /**
-     * Local transactions table name string.
+     * Bean - Local transactions table name string.
      *
-     * @return the string
+     * @return Local transactions table name
      */
     @Bean
-    String localTransactionsTableName(){
+    public String localTransactionsTableName(){
         return "local_transactions";
     }
 }

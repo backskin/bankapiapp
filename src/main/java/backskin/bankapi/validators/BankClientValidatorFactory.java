@@ -15,7 +15,7 @@ public class BankClientValidatorFactory {
      * @return the validator
      */
     @Bean
-    Validator<BankClient, String> byFullName(){
+    public Validator<BankClient, String> byFullName(){
         return new Validator<>() {
             @Override
             public boolean validateObject(BankClient object, String tag) {
@@ -40,7 +40,7 @@ public class BankClientValidatorFactory {
      * @return the validator
      */
     @Bean
-    Validator<BankClient, String> byPhoneNumber(){
+    public Validator<BankClient, String> byPhoneNumber(){
         return new Validator<>() {
             @Override
             public boolean validateObject(BankClient object, String tag) {
@@ -65,7 +65,7 @@ public class BankClientValidatorFactory {
      * @return the validator
      */
     @Bean
-    Validator<BankClient, Long> byPassportId(){
+    public Validator<BankClient, Long> byPassportId(){
         return new Validator<>() {
             @Override
             public boolean validateObject(BankClient object, Long tag) {

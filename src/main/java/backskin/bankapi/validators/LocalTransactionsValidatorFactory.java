@@ -21,7 +21,7 @@ public class LocalTransactionsValidatorFactory {
      */
     @Bean
     @Qualifier("transactionValidatorByAccountId")
-    Validator<LocalTransaction, Long> byAccountId(){
+    public Validator<LocalTransaction, Long> byAccountId(){
         return new Validator<>() {
             @Override
             public boolean validateObject(LocalTransaction object, Long tag) {
@@ -47,7 +47,7 @@ public class LocalTransactionsValidatorFactory {
      */
     @Bean
     @Qualifier("validatorByDifference")
-    Validator<LocalTransaction, BigDecimal> byDifference(){
+    public Validator<LocalTransaction, BigDecimal> byDifference(){
         return new Validator<>() {
             @Override
             public boolean validateObject(LocalTransaction object, BigDecimal tag) {
@@ -73,7 +73,7 @@ public class LocalTransactionsValidatorFactory {
      */
     @Bean
     @Primary
-    Validator<LocalTransaction, Timestamp> byDate(){
+    public Validator<LocalTransaction, Timestamp> byDate(){
         return new Validator<>() {
             @Override
             public boolean validateObject(LocalTransaction object, Timestamp tag) {
@@ -98,7 +98,7 @@ public class LocalTransactionsValidatorFactory {
      * @return the validator
      */
     @Bean
-    Validator<LocalTransaction, Timestamp> byDateBefore(){
+    public Validator<LocalTransaction, Timestamp> byDateBefore(){
         return new Validator<>() {
             @Override
             public boolean validateObject(LocalTransaction object, Timestamp tag) {
@@ -129,7 +129,7 @@ public class LocalTransactionsValidatorFactory {
      */
     @Bean
     @Primary
-    Validator<LocalTransaction, String> byDetails(){
+    public Validator<LocalTransaction, String> byDetails(){
         return new Validator<>() {
             @Override
             public boolean validateObject(LocalTransaction object, String tag) {
@@ -152,7 +152,7 @@ public class LocalTransactionsValidatorFactory {
      * @return the validator
      */
     @Bean
-    Validator<LocalTransaction, String> byDetailsContains(){
+    public Validator<LocalTransaction, String> byDetailsContains(){
         return new Validator<>() {
             @Override
             public boolean validateObject(LocalTransaction object, String tag) {

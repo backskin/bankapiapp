@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * The type Bank client controller.
+ * The Bank Clients Controller.
  */
 @RestController
 @RequestMapping("/api/v1/clients")
