@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,15 +77,38 @@ public class BankAccountService {
         return debitCardService.saveDebitCard(debitCardService.claimNewDebitCard(requestDate, accountId));
     }
 
-    public List<BankAccountInfo> getAllAccounts() throws SQLException {
+    public List<BankAccountInfo> getAllAccountsInfo() throws SQLException {
         return bankAccountSqlRepo.getAll().stream().map(infoBankAccountMapper::map).collect(Collectors.toList());
     }
 
-    public BankAccountInfo getAccountById(Long accountId) throws SQLException{
+    public List<BankAccount> getFullAccountsData() throws SQLException {
+        return bankAccountSqlRepo.getAll();
+    }
+
+    public BankAccount getBankAccount(Long accountId) throws SQLException {
+        return bankAccountSqlDAO.read(accountId);
+    }
+
+    public BankAccountInfo getAccountInfoById(Long accountId) throws SQLException{
         return infoBankAccountMapper.map(bankAccountSqlDAO.read(accountId));
     }
 
     public String getAccountBalanceAsString(Long accountId) throws SQLException{
         return bankAccountSqlDAO.read(accountId).getBalance().toString();
+    }
+
+    public DepositInfo makeDeposit(DepositCredentials depositCredentials, Long accountId) throws Exception{
+        if (!depositCredentials.getRecipientAccountId().equals(accountId)){
+            throw new Exception("RECIPIENT_ACCOUNT_ID_DOES_NOT_MATCH_DEPOSIT_CREDENTIALS");
+        }
+        DepositInfo.DepositInfoBuilder builder =
+                DepositInfo.builder().depositAmount(depositCredentials.getDepositAmount())
+                        .dateOfOperation(Timestamp.from(Instant.now()));
+        BankAccount account = bankAccountSqlDAO.read(accountId);
+        account.setBalance(account.getBalance().add(depositCredentials.getDepositAmount()));
+
+        return builder.currentBalanceAfterDeposit(account.getBalance())
+                .accountNumber(account.getNumber())
+                .build();
     }
 }

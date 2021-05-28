@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @Builder
-public class BankAccountCredentials {
+public class BankAccountCredentials implements Credentials{
     private Long clientId;
     private String number;
     private BigDecimal balance;

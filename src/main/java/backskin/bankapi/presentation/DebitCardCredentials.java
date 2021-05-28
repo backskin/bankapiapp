@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @Builder
-public class DebitCardCredentials {
+public class DebitCardCredentials implements Credentials{
     private Long accountId;
     private String number;
     private String expirationDate;

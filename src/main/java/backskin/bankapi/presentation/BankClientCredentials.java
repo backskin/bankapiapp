@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BankClientCredentials implements Serializable {
+public class BankClientCredentials implements Credentials {
     private Long passportId;
     private String fullName;
     private String phoneNumber;

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class BankClientInfo {
+public class BankClientInfo implements Info{
     private String fullName;
     @Builder.Default
     private String phoneNumber = "8(800)555-35-35";
