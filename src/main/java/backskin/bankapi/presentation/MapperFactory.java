@@ -33,7 +33,7 @@ public class MapperFactory {
 
     @Bean
     Mapper<BankClientInfo, BankClient> infoBankClientMapper(){
-        return bankClient -> BankClientInfo.builder().fullName(bankClient.getFullName()).passportId(bankClient.getPassportId())
+        return bankClient -> BankClientInfo.builder().fullName(bankClient.getFullName())
                 .phoneNumber(bankClient.getPhoneNumber()).build();
     }
 }

@@ -1,12 +1,11 @@
 package backskin.bankapi.controllers;
 
+import backskin.bankapi.domain.BankClient;
 import backskin.bankapi.presentation.BankAccountInfo;
+import backskin.bankapi.presentation.BankClientCredentials;
 import backskin.bankapi.presentation.BankClientInfo;
 import backskin.bankapi.services.BankClientService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -32,5 +31,9 @@ public class BankClientController {
     @GetMapping({"{clientId}/accounts","{clientId}/accounts/all"})
     public List<BankAccountInfo> getBankAccountsOnClient(@PathVariable Long clientId) throws Exception{
         return bankClientService.getBankAccountsOnClient(clientId);
+    }
+    @PostMapping("registration")
+    public BankClient createNewBankClient(@RequestBody BankClientCredentials credentials) throws Exception{
+        return bankClientService.createNewBankClient(credentials);
     }
 }

@@ -13,5 +13,4 @@ public class BankClientInfo {
     private String fullName;
     @Builder.Default
     private String phoneNumber = "8(800)555-35-35";
-    private Long passportId;
 }

@@ -5,6 +5,7 @@ import backskin.bankapi.dao.SqlRepo;
 import backskin.bankapi.domain.BankAccount;
 import backskin.bankapi.domain.BankClient;
 import backskin.bankapi.presentation.BankAccountInfo;
+import backskin.bankapi.presentation.BankClientCredentials;
 import backskin.bankapi.presentation.BankClientInfo;
 import backskin.bankapi.presentation.Mapper;
 import backskin.bankapi.validators.Validator;
@@ -59,6 +60,11 @@ public class BankClientService {
     public List<BankAccountInfo> getBankAccountsOnClient(Long clientId) throws Exception {
         return bankAccountSqlRepo.findAll(bankAccountValidatorByClientId, clientId)
                 .stream().map(infoBankAccountMapper::map).collect(Collectors.toList());
+    }
+
+    public BankClient createNewBankClient(BankClientCredentials credentials) throws Exception{
+        return bankClientDAO.create(BankClient.builder().fullName(credentials.getFullName())
+                .phoneNumber(credentials.getPhoneNumber()).passportId(credentials.getPassportId()).build());
     }
 }
 
