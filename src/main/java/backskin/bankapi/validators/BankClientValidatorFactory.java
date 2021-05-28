@@ -4,8 +4,16 @@ import backskin.bankapi.domain.BankClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * The type Bank client validator factory.
+ */
 @Configuration
 public class BankClientValidatorFactory {
+    /**
+     * By full name validator.
+     *
+     * @return the validator
+     */
     @Bean
     Validator<BankClient, String> byFullName(){
         return new Validator<>() {
@@ -26,6 +34,11 @@ public class BankClientValidatorFactory {
         };
     }
 
+    /**
+     * By phone number validator.
+     *
+     * @return the validator
+     */
     @Bean
     Validator<BankClient, String> byPhoneNumber(){
         return new Validator<>() {
@@ -46,6 +59,11 @@ public class BankClientValidatorFactory {
         };
     }
 
+    /**
+     * By passport id validator.
+     *
+     * @return the validator
+     */
     @Bean
     Validator<BankClient, Long> byPassportId(){
         return new Validator<>() {

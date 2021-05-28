@@ -9,8 +9,16 @@ import org.springframework.context.annotation.Primary;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+/**
+ * The type Local transactions validator factory.
+ */
 @Configuration
 public class LocalTransactionsValidatorFactory {
+    /**
+     * By account id validator.
+     *
+     * @return the validator
+     */
     @Bean
     @Qualifier("transactionValidatorByAccountId")
     Validator<LocalTransaction, Long> byAccountId(){
@@ -32,6 +40,11 @@ public class LocalTransactionsValidatorFactory {
         };
     }
 
+    /**
+     * By difference validator.
+     *
+     * @return the validator
+     */
     @Bean
     @Qualifier("validatorByDifference")
     Validator<LocalTransaction, BigDecimal> byDifference(){
@@ -53,6 +66,11 @@ public class LocalTransactionsValidatorFactory {
         };
     }
 
+    /**
+     * By date validator.
+     *
+     * @return the validator
+     */
     @Bean
     @Primary
     Validator<LocalTransaction, Timestamp> byDate(){
@@ -74,6 +92,11 @@ public class LocalTransactionsValidatorFactory {
         };
     }
 
+    /**
+     * By date before validator.
+     *
+     * @return the validator
+     */
     @Bean
     Validator<LocalTransaction, Timestamp> byDateBefore(){
         return new Validator<>() {
@@ -99,6 +122,11 @@ public class LocalTransactionsValidatorFactory {
         };
     }
 
+    /**
+     * By details validator.
+     *
+     * @return the validator
+     */
     @Bean
     @Primary
     Validator<LocalTransaction, String> byDetails(){
@@ -118,6 +146,11 @@ public class LocalTransactionsValidatorFactory {
         };
     }
 
+    /**
+     * By details contains validator.
+     *
+     * @return the validator
+     */
     @Bean
     Validator<LocalTransaction, String> byDetailsContains(){
         return new Validator<>() {

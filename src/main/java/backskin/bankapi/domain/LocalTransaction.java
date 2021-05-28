@@ -8,8 +8,10 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.Instant;
 
+/**
+ * The type Local transaction.
+ */
 @Getter
 public class LocalTransaction extends AbstractModel {
     private final BigDecimal transactionDifference;
@@ -19,6 +21,15 @@ public class LocalTransaction extends AbstractModel {
     @Setter
     private String details;
 
+    /**
+     * Instantiates a new Local transaction.
+     *
+     * @param id                    the id
+     * @param transactionDifference the transaction difference
+     * @param date                  the date
+     * @param bankAccountId         the bank account id
+     * @param details               the details
+     */
     @Builder
     public LocalTransaction(@NonNull Long id,
                             BigDecimal transactionDifference,

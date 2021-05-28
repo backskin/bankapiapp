@@ -1,10 +1,16 @@
 package backskin.bankapi.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 
+/**
+ * The type Abstract model.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

@@ -1,14 +1,21 @@
 package backskin.bankapi.validators;
 
 import backskin.bankapi.domain.BankAccount;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
 
+/**
+ * The Bank account validator factory.
+ */
 @Configuration
 public class BankAccountValidatorFactory {
+    /**
+     * By number validator.
+     *
+     * @return the validator
+     */
     @Bean
     public static Validator<BankAccount, String> byNumber(){
         return new Validator<>() {
@@ -29,6 +36,11 @@ public class BankAccountValidatorFactory {
         };
     }
 
+    /**
+     * By client id validator.
+     *
+     * @return the validator
+     */
     @Bean
     public static Validator<BankAccount, Long> byClientId(){
         return new Validator<>() {
@@ -49,6 +61,11 @@ public class BankAccountValidatorFactory {
         };
     }
 
+    /**
+     * By balance more or equal validator.
+     *
+     * @return the validator
+     */
     @Bean
     public static Validator<BankAccount, BigDecimal> byBalanceMoreOrEqual(){
          return new Validator<>() {
@@ -74,6 +91,11 @@ public class BankAccountValidatorFactory {
          };
     }
 
+    /**
+     * By balance validator.
+     *
+     * @return the validator
+     */
     @Bean
     public static Validator<BankAccount, BigDecimal> byBalance(){
         return new Validator<>() {

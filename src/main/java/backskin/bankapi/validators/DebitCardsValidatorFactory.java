@@ -5,8 +5,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * The type Debit cards validator factory.
+ */
 @Configuration
 public class DebitCardsValidatorFactory {
+    /**
+     * Card validator by account id validator.
+     *
+     * @return the validator
+     */
     @Bean
     Validator<DebitCard, Long> cardValidatorByAccountId(){
         return new Validator<>() {
@@ -27,6 +35,11 @@ public class DebitCardsValidatorFactory {
         };
     }
 
+    /**
+     * Card validator by number validator.
+     *
+     * @return the validator
+     */
     @Bean
     @Qualifier("cardValidatorByNumber")
     Validator<DebitCard, String> cardValidatorByNumber(){
@@ -48,6 +61,11 @@ public class DebitCardsValidatorFactory {
         };
     }
 
+    /**
+     * Card validator by expiration date validator.
+     *
+     * @return the validator
+     */
     @Bean
     @Qualifier("cardValidatorByExpirationDate")
     Validator<DebitCard, String> cardValidatorByExpirationDate(){
@@ -69,6 +87,11 @@ public class DebitCardsValidatorFactory {
         };
     }
 
+    /**
+     * Card validator by cvv code validator.
+     *
+     * @return the validator
+     */
     @Bean
     @Qualifier("cardValidatorByCVVCode")
     Validator<DebitCard, String> cardValidatorByCVVCode(){

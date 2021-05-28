@@ -3,14 +3,23 @@ package backskin.bankapi.dao;
 import backskin.bankapi.models.AbstractModel;
 import backskin.bankapi.validators.Validator;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The interface Sql repo.
+ *
+ * @param <T> the type parameter
+ */
 public interface SqlRepo<T extends AbstractModel> extends Repo<T>, SqlDAO<T> {
 
+    /**
+     * Create container list.
+     *
+     * @return the list
+     */
     default List<T> createContainer(){
         return new ArrayList<>();
     };

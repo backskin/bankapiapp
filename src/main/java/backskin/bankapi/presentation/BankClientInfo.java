@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * The type Bank client info.
+ */
 @Builder
 @Getter
 @Setter

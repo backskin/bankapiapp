@@ -12,9 +12,17 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * The type App configuration.
+ */
 @Configuration
 public class AppConfiguration {
 
+    /**
+     * Data source data source.
+     *
+     * @return the data source
+     */
     @Bean
     @Scope("singleton")
     DataSource dataSource(){
@@ -24,6 +32,13 @@ public class AppConfiguration {
                 .addScript("classpath:DB/data.sql").build();
     }
 
+    /**
+     * Connection connection.
+     *
+     * @param dataSource the data source
+     * @return the connection
+     * @throws SQLException the sql exception
+     */
     @Bean
     @Autowired
     @Synchronized
@@ -33,21 +48,41 @@ public class AppConfiguration {
         return connection;
     }
 
+    /**
+     * Bank clients table name string.
+     *
+     * @return the string
+     */
     @Bean
     String bankClientsTableName(){
         return "bank_clients";
     }
 
+    /**
+     * Bank accounts table name string.
+     *
+     * @return the string
+     */
     @Bean
     String bankAccountsTableName(){
         return "bank_accounts";
     }
 
+    /**
+     * Debit cards table name string.
+     *
+     * @return the string
+     */
     @Bean
     String debitCardsTableName(){
         return "debit_cards";
     }
 
+    /**
+     * Local transactions table name string.
+     *
+     * @return the string
+     */
     @Bean
     String localTransactionsTableName(){
         return "local_transactions";

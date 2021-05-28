@@ -5,6 +5,9 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+/**
+ * The type Deposit info.
+ */
 @Getter
 @Setter
 @Builder(builderClassName = "DepositInfoBuilder")

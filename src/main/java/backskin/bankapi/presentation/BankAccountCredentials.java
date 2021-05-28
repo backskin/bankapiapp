@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+/**
+ * The type Bank account credentials.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

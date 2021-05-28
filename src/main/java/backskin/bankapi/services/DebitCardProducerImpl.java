@@ -6,14 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Calendar;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.function.Supplier;
 
+/**
+ * The type Debit card producer.
+ */
 @Component
 public class DebitCardProducerImpl implements DebitCardProducer {
 
@@ -31,15 +32,30 @@ public class DebitCardProducerImpl implements DebitCardProducer {
         return "'"+ output +"'";
     };
 
+    /**
+     * Instantiates a new Debit card producer.
+     *
+     * @param dateOnCardMapper the date on card mapper
+     */
     public DebitCardProducerImpl(Mapper<String, Calendar> dateOnCardMapper) {
         this.dateOnCardMapper = dateOnCardMapper;
     }
 
+    /**
+     * Sets time zone supplier.
+     *
+     * @param timeZoneSupplier the time zone supplier
+     */
     @Autowired
     public void setTimeZoneSupplier(Supplier<TimeZone> timeZoneSupplier) {
         this.timeZoneSupplier = timeZoneSupplier;
     }
 
+    /**
+     * Sets card lifetime in years.
+     *
+     * @param cardLifetimeInYears the card lifetime in years
+     */
     @Autowired
     public void setCardLifetimeInYears(@Value("5") Integer cardLifetimeInYears) {
         this.lifetimeInYears = cardLifetimeInYears;

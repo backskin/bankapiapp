@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * The type Bank client.
+ */
 @Getter
 @Setter
 public class BankClient extends AbstractModel {
@@ -13,6 +16,14 @@ public class BankClient extends AbstractModel {
     private String phoneNumber = "8(800)555-35-35";
     private Long passportId;
 
+    /**
+     * Instantiates a new Bank client.
+     *
+     * @param id          the id
+     * @param fullName    the full name
+     * @param phoneNumber the phone number
+     * @param passportId  the passport id
+     */
     @Builder
     public BankClient(Long id, String fullName, String phoneNumber, Long passportId) {
         super(id);

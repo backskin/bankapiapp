@@ -11,13 +11,24 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * The type Bank account dao.
+ */
 @Getter
 @Repository
 public class BankAccountDAO extends AbstractDAO<BankAccount> {
     private final String tableName;
+    /**
+     * The Mapper.
+     */
     BankAccountSqlMapper mapper;
     private Connection connection;
 
+    /**
+     * Set connection.
+     *
+     * @param connection the connection
+     */
     @Autowired
     public void setConnection(Connection connection){
         this.connection = connection;
@@ -33,11 +44,21 @@ public class BankAccountDAO extends AbstractDAO<BankAccount> {
         return mapper;
     }
 
+    /**
+     * Instantiates a new Bank account dao.
+     *
+     * @param bankAccountsTableName the bank accounts table name
+     */
     @Autowired
     public BankAccountDAO(String bankAccountsTableName) {
         this.tableName = bankAccountsTableName;
     }
 
+    /**
+     * Set mapper.
+     *
+     * @param mapper the mapper
+     */
     @Autowired
     public void setMapper(BankAccountSqlMapper mapper){
         this.mapper = mapper;

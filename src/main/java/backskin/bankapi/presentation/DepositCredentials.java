@@ -1,15 +1,19 @@
 package backskin.bankapi.presentation;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
+/**
+ * The type Deposit credentials.
+ */
 @Getter
-@NoArgsConstructor
+@Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class DepositCredentials implements Credentials{
     private Long recipientAccountId;
-    private BigDecimal depositAmount;
+    @Builder.Default
+    private BigDecimal depositAmount = BigDecimal.ZERO;
 }

@@ -1,6 +1,5 @@
 package backskin.bankapi.services;
 
-import backskin.bankapi.dao.CRUD;
 import backskin.bankapi.dao.DebitCardDAO;
 import backskin.bankapi.dao.SqlDAO;
 import backskin.bankapi.dao.SqlRepo;
@@ -20,6 +19,9 @@ import java.util.TimeZone;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+/**
+ * The type Debit card service.
+ */
 @Service
 public class DebitCardService {
 
@@ -29,6 +31,14 @@ public class DebitCardService {
     private final Supplier<TimeZone> timeZoneSupplier;
     private Mapper<DebitCardInfo, DebitCard> infoDebitCardMapper;
 
+    /**
+     * Instantiates a new Debit card service.
+     *
+     * @param cardProducer     the card producer
+     * @param debitCardDAO     the debit card dao
+     * @param debitCardSqlRepo the debit card sql repo
+     * @param timeZoneSupplier the time zone supplier
+     */
     public DebitCardService(DebitCardProducer cardProducer,
                             DebitCardDAO debitCardDAO,
                             SqlRepo<DebitCard> debitCardSqlRepo,
@@ -39,21 +49,47 @@ public class DebitCardService {
         this.timeZoneSupplier = timeZoneSupplier;
     }
 
+    /**
+     * Sets info debit card mapper.
+     *
+     * @param infoDebitCardMapper the info debit card mapper
+     */
     @Autowired
     public void setInfoDebitCardMapper(Mapper<DebitCardInfo, DebitCard> infoDebitCardMapper) {
         this.infoDebitCardMapper = infoDebitCardMapper;
     }
 
+    /**
+     * Gets all cards info.
+     *
+     * @return the all cards info
+     * @throws SQLException the sql exception
+     */
     public List<DebitCardInfo> getAllCardsInfo() throws SQLException {
         return debitCardSqlRepo.getAll().stream().map(infoDebitCardMapper::map).collect(Collectors.toList());
     }
 
+    /**
+     * Claim new debit card debit card credentials.
+     *
+     * @param requestDate the request date
+     * @param accountId   the account id
+     * @return the debit card credentials
+     * @throws Exception the exception
+     */
     public DebitCardCredentials claimNewDebitCard(Timestamp requestDate, Long accountId) throws Exception {
         Calendar cal = Calendar.getInstance(timeZoneSupplier.get());
         cal.setTime(new Date(requestDate.getTime()));
         return cardProducer.releaseDebitCard(accountId,requestDate);
     }
 
+    /**
+     * Save debit card debit card.
+     *
+     * @param cardCredentials the card credentials
+     * @return the debit card
+     * @throws SQLException the sql exception
+     */
     public DebitCard saveDebitCard(DebitCardCredentials cardCredentials) throws SQLException {
         return debitCardDAO.create(DebitCard.builder().number(cardCredentials.getNumber())
                 .bankAccountId(cardCredentials.getAccountId()).expirationDate(cardCredentials.getExpirationDate())

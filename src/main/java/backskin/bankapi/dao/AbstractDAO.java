@@ -10,8 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.UUID;
 
+/**
+ * The type Abstract dao.
+ *
+ * @param <T> the type parameter
+ */
 @Component
 @RequiredArgsConstructor
 public abstract class AbstractDAO<T extends AbstractModel> implements SqlDAO<T> {

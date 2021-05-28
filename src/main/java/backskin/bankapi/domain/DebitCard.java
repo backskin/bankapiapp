@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
+/**
+ * The type Debit card.
+ */
 @Getter
 @Setter
 public class DebitCard extends AbstractModel implements Serializable {
@@ -15,6 +18,15 @@ public class DebitCard extends AbstractModel implements Serializable {
     private String expirationDate;
     private String cvvCode;
 
+    /**
+     * Instantiates a new Debit card.
+     *
+     * @param id             the id
+     * @param number         the number
+     * @param bankAccountId  the bank account id
+     * @param expirationDate the expiration date
+     * @param cvvCode        the cvv code
+     */
     @Builder
     public DebitCard(Long id, String number, Long bankAccountId, String expirationDate, String cvvCode) {
         super(id);

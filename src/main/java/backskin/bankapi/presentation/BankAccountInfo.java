@@ -3,10 +3,12 @@ package backskin.bankapi.presentation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 
+/**
+ * The type Bank account info.
+ */
 @Getter
 @AllArgsConstructor
 @Builder

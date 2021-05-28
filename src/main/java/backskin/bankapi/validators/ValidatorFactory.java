@@ -5,8 +5,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+/**
+ * The type Validator factory.
+ */
 @Configuration
 public class ValidatorFactory {
+    /**
+     * Entity validator by id validator.
+     *
+     * @return the validator
+     */
     @Bean
     @Primary
     public Validator<AbstractModel, Long> entityValidatorById(){

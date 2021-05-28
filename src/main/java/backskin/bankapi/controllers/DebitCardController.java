@@ -10,16 +10,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Debit card controller.
+ */
 @RestController
 @RequestMapping("/api/v1/debitcards")
 public class DebitCardController {
 
     private final DebitCardService debitCardService;
 
+    /**
+     * Instantiates a new Debit card controller.
+     *
+     * @param debitCardService the debit card service
+     */
     public DebitCardController(DebitCardService debitCardService) {
         this.debitCardService = debitCardService;
     }
 
+    /**
+     * Gets all cards info.
+     *
+     * @return the all cards info
+     */
     @GetMapping({"","all"})
     List<DebitCardInfo> getAllCardsInfo()  {
         try {

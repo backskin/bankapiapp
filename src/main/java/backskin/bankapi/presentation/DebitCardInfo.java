@@ -4,6 +4,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * The type Debit card info.
+ */
 @Getter
 @RequiredArgsConstructor
 @Builder
