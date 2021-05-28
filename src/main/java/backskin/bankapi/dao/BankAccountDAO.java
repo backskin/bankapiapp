@@ -5,7 +5,6 @@ import backskin.bankapi.dao.mappers.BankAccountSqlMapper;
 import backskin.bankapi.domain.BankAccount;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -15,7 +14,7 @@ import java.sql.SQLException;
 @Getter
 @Repository
 public class BankAccountDAO extends AbstractDAO<BankAccount> {
-    private final String bankAccountsTableName;
+    private final String tableName;
     BankAccountSqlMapper mapper;
     private Connection connection;
 
@@ -26,7 +25,7 @@ public class BankAccountDAO extends AbstractDAO<BankAccount> {
 
     @Override
     public String getTableName() {
-        return bankAccountsTableName;
+        return tableName;
     }
 
     @Override
@@ -36,7 +35,7 @@ public class BankAccountDAO extends AbstractDAO<BankAccount> {
 
     @Autowired
     public BankAccountDAO(String bankAccountsTableName) {
-        this.bankAccountsTableName = bankAccountsTableName;
+        this.tableName = bankAccountsTableName;
     }
 
     @Autowired
@@ -46,17 +45,13 @@ public class BankAccountDAO extends AbstractDAO<BankAccount> {
 
     @Override
     public void update(BankAccount entity, Long id) throws SQLException {
-        String sqlQuery = "UPDATE ? SET ?,?,? WHERE ?";
-        PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
-        statement.setString(1, getBankAccountsTableName());
-        statement.setString(2,
-               mapper.getNumberValidator().validationRule(entity.getNumber()));
-        statement.setString(3,
-                mapper.getBalanceValidator().validationRule(entity.getBalance()));
-        statement.setString(4,
-                mapper.getClientIdValidator().validationRule(entity.getBankClientId()));
-        statement.setString(5,
+        String sqlQuery = String.format("UPDATE %s SET %s,%s,%s WHERE %s",
+                getTableName(),
+                mapper.getNumberValidator().validationRule(entity.getNumber()),
+                mapper.getBalanceValidator().validationRule(entity.getBalance()),
+                mapper.getClientIdValidator().validationRule(entity.getBankClientId()),
                 mapper.getIdValidator().validationRule(entity.getId()));
+        PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
         statement.execute();
         connection.commit();
     }

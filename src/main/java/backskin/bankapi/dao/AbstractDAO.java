@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -18,32 +20,34 @@ public abstract class AbstractDAO<T extends AbstractModel> implements SqlDAO<T> 
 
     @Override
     public T create(T entity) throws SQLException {
-        String sqlQuery = "INSERT INTO ? (?) VALUES(?)";
-        PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
-        statement.setString(1, getTableName());
-        statement.setString(2, entity.fields());
-        statement.setString(3, entity.values());
-        statement.executeUpdate();
-        ResultSet generatedKeys = statement.getGeneratedKeys();
-        if (generatedKeys.next()){
-            entity.setId(generatedKeys.getLong(1));
+        System.out.println("3");
+        String sqlQuery = String.format("INSERT INTO %s (%s) VALUES(%s)",
+                getTableName(), entity.fields(), entity.values());
+        PreparedStatement statement = getConnection().prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+        int row = statement.executeUpdate();
+        if (row < 1){
+            throw new SQLException("execution of query failed");
+        }
+        ResultSet rs = statement.getGeneratedKeys();
+        if (rs.next()){
+            entity.setId(rs.getObject("id", Long.class));
             getConnection().commit();
             return entity;
         } else {
+            getConnection().rollback();
             throw new SQLException("Entity creation failed");
         }
     }
 
     @Override
     public T read(Long id) throws SQLException, NullPointerException {
-        String sqlQuery = "SELECT * FROM ? WHERE ?";
+        String sqlQuery = String.format("SELECT * FROM %s WHERE %s",
+                getTableName(), getMapper().getIdValidator().validationRule(id));
         PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
-        statement.setString(1, getTableName());
-        statement.setString(2, getMapper().getIdValidator().validationRule(id));
         ResultSet resultSet = statement.executeQuery();
         if (!resultSet.next()){
-            throw new NullPointerException(
-                    String.format("Entity with id=%d in table='%s' not found", id, getTableName()));
+            getConnection().rollback();
+            throw new NullPointerException("ENTITY_NOT_FOUND");
         };
         T output = getMapper().map(resultSet);
         getConnection().commit();
@@ -52,12 +56,14 @@ public abstract class AbstractDAO<T extends AbstractModel> implements SqlDAO<T> 
 
     @Override
     public void delete(T entity) throws SQLException, NullPointerException {
-        String sqlQuery = "DELETE FROM ? WHERE ?";
+        String sqlQuery = String.format("DELETE FROM %s WHERE %s",
+                getTableName(), getMapper().getIdValidator().validationRule(entity.getId()));
         PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
-        statement.setString(1, getTableName());
-        statement.setString(2, getMapper().getIdValidator().validationRule(entity.getId()));
         int i = statement.executeUpdate();
-        if (i == 0) throw new NullPointerException("Entity deletion failed");
+        if (i == 0) {
+            getConnection().rollback();
+            throw new NullPointerException("Entity deletion failed");
+        }
         getConnection().commit();
     }
 }

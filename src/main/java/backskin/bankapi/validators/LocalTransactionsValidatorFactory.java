@@ -31,6 +31,7 @@ public class LocalTransactionsValidatorFactory {
             }
         };
     }
+
     @Bean
     @Qualifier("validatorByDifference")
     Validator<LocalTransaction, BigDecimal> byDifference(){
@@ -51,6 +52,7 @@ public class LocalTransactionsValidatorFactory {
             }
         };
     }
+
     @Bean
     @Primary
     Validator<LocalTransaction, Timestamp> byDate(){
@@ -71,6 +73,7 @@ public class LocalTransactionsValidatorFactory {
             }
         };
     }
+
     @Bean
     Validator<LocalTransaction, Timestamp> byDateBefore(){
         return new Validator<>() {
@@ -95,6 +98,7 @@ public class LocalTransactionsValidatorFactory {
             }
         };
     }
+
     @Bean
     @Primary
     Validator<LocalTransaction, String> byDetails(){
@@ -113,6 +117,7 @@ public class LocalTransactionsValidatorFactory {
             }
         };
     }
+
     @Bean
     Validator<LocalTransaction, String> byDetailsContains(){
         return new Validator<>() {

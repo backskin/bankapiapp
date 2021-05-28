@@ -15,9 +15,10 @@ public class LocalTransaction extends AbstractModel {
     private final BigDecimal transactionDifference;
     @NonNull
     private final Long bankAccountId;
-    private final Timestamp date = Timestamp.from(Instant.now());
+    private final Timestamp date;
     @Setter
-    private String details = "[{}]";
+    private String details;
+
     @Builder
     public LocalTransaction(@NonNull Long id,
                             BigDecimal transactionDifference,
@@ -27,6 +28,7 @@ public class LocalTransaction extends AbstractModel {
         super(id);
         this.transactionDifference = transactionDifference;
         this.bankAccountId = bankAccountId;
+        this.date = date;
         this.details = details;
     }
     @Override

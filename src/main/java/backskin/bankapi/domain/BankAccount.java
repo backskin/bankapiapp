@@ -16,6 +16,7 @@ public class BankAccount extends AbstractModel {
     private Long bankClientId;
     @Setter
     private BigDecimal balance;
+
     @Builder(builderClassName = "BankAccountBuilder")
     public BankAccount(@NotNull Long id,
                        @NotNull String number,

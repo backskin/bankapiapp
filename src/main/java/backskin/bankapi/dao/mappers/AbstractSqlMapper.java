@@ -14,6 +14,7 @@ import java.sql.SQLException;
 public abstract class AbstractSqlMapper<T extends SqlModel> implements SqlMapper<T> {
     @Getter
     private Validator<AbstractModel, Long> idValidator;
+
     @Autowired
     public void setIdValidator(Validator<AbstractModel, Long> idValidator) {
         this.idValidator = idValidator;

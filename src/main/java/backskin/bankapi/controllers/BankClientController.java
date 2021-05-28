@@ -1,5 +1,6 @@
 package backskin.bankapi.controllers;
 
+import backskin.bankapi.presentation.BankAccountInfo;
 import backskin.bankapi.presentation.BankClientInfo;
 import backskin.bankapi.services.BankClientService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/v1/clients")
 public class BankClientController {
 
-    private BankClientService bankClientService;
+    private final BankClientService bankClientService;
 
     public BankClientController(BankClientService bankClientService) {
         this.bankClientService = bankClientService;
@@ -24,8 +25,12 @@ public class BankClientController {
     public List<BankClientInfo> getAllClientsInfo() throws SQLException {
         return bankClientService.getAllBankClients();
     }
-    @GetMapping("?id={clientId}")
+    @GetMapping({"{clientId}", "{clientId}/info"})
     public BankClientInfo getClientInfoById(@PathVariable Long clientId) throws Exception {
         return bankClientService.getClientById(clientId);
+    }
+    @GetMapping({"{clientId}/accounts","{clientId}/accounts/all"})
+    public List<BankAccountInfo> getBankAccountsOnClient(@PathVariable Long clientId) throws Exception{
+        return bankClientService.getBankAccountsOnClient(clientId);
     }
 }

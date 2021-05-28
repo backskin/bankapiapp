@@ -18,10 +18,8 @@ public interface SqlRepo<T extends AbstractModel> extends Repo<T>, SqlDAO<T> {
     @Override
     default List<T> getAll() throws SQLException {
         List<T> container = createContainer();
-        String sqlQuery = "SELECT * FROM ?";
-        PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
-        statement.setString(1, getTableName());
-        ResultSet resultSet = statement.executeQuery();
+        String sqlQuery = String.format("SELECT * FROM %s", getTableName());
+        ResultSet resultSet = getConnection().createStatement().executeQuery(sqlQuery);
         while (resultSet.next()){
             T value = getMapper().map(resultSet);
             container.add(value);
@@ -32,11 +30,8 @@ public interface SqlRepo<T extends AbstractModel> extends Repo<T>, SqlDAO<T> {
     @Override
     default  <Tag> List<T> findAll(Validator<T, Tag> validator, Tag tagValue) throws SQLException {
         List<T> container = createContainer();
-        String sqlQuery = "SELECT * FROM ? WHERE ?";
-        PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
-        statement.setString(1, getTableName());
-        statement.setString(2, validator.validationRule(tagValue));
-        ResultSet resultSet = statement.executeQuery();
+        String sqlQuery = String.format("SELECT * FROM %s WHERE %s", getTableName(), validator.validationRule(tagValue));
+        ResultSet resultSet = getConnection().createStatement().executeQuery(sqlQuery);
         while (resultSet.next()){
             T value = getMapper().map(resultSet);
             container.add(value);

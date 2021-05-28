@@ -18,7 +18,8 @@ public class MapperFactory {
 
     @Bean
     Mapper<String, Calendar> timeToCardDateMapper(){
-        return calendar -> calendar.get(Calendar.MONTH) + "//" + calendar.get(Calendar.YEAR);
+        return calendar -> "'"+String.format("%02d",calendar.get(Calendar.MONTH))
+                + "/" + String.valueOf(calendar.get(Calendar.YEAR)).substring(2)+"'";
     }
 
     @Bean

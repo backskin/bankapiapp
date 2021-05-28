@@ -61,7 +61,7 @@ public class BankAccountService {
                 .build());
     }
 
-    public List<DebitCardInfo> getCardsInfoOnAccount(Long accountId) throws Exception {
+    public List<DebitCardInfo> getDebitCardsInfoOnAccount(Long accountId) throws Exception {
         List<DebitCard> foundDebitCards = debitCardSqlRepo.findAll(accountIdValidator,accountId);
         List<DebitCardInfo> output = new LinkedList<>();
         for (DebitCard card: foundDebitCards) {
@@ -71,9 +71,9 @@ public class BankAccountService {
         return output;
     }
 
-    public DebitCardInfo createNewDebitCardForAccount(Timestamp requestDate, Long accountId) throws Exception {
-        DebitCardCredentials cardCredentials = debitCardService.claimNewDebitCard(requestDate, accountId);
-        return debitCardService.saveDebitCard(cardCredentials);
+    public DebitCard createNewDebitCardForAccount(Timestamp requestDate, Long accountId) throws Exception {
+        System.out.println("1");
+        return debitCardService.saveDebitCard(debitCardService.claimNewDebitCard(requestDate, accountId));
     }
 
     public List<BankAccountInfo> getAllAccounts() throws SQLException {
@@ -82,5 +82,9 @@ public class BankAccountService {
 
     public BankAccountInfo getAccountById(Long accountId) throws SQLException{
         return infoBankAccountMapper.map(bankAccountSqlDAO.read(accountId));
+    }
+
+    public String getAccountBalanceAsString(Long accountId) throws SQLException{
+        return bankAccountSqlDAO.read(accountId).getBalance().toString();
     }
 }

@@ -5,19 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Debit Card Class
- * @author backskin
- * This is the model of Bank's debit cards.
- * Erery field is final, because that is so in the real bank.
- */
+import java.io.Serializable;
+
 @Getter
-public class DebitCard extends AbstractModel {
-    private final String number;
-    @Setter
+@Setter
+public class DebitCard extends AbstractModel implements Serializable {
+    private String number;
     private Long bankAccountId;
-    private final String expirationDate;
-    private final String cvvCode;
+    private String expirationDate;
+    private String cvvCode;
 
     @Builder
     public DebitCard(Long id, String number, Long bankAccountId, String expirationDate, String cvvCode) {

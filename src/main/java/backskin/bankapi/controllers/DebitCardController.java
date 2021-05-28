@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/debitcards/")
+@RequestMapping("/api/v1/debitcards")
 public class DebitCardController {
 
     private final DebitCardService debitCardService;

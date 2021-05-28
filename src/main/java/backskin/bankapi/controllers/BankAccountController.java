@@ -1,14 +1,17 @@
 package backskin.bankapi.controllers;
 
 import backskin.bankapi.domain.BankAccount;
+import backskin.bankapi.domain.DebitCard;
 import backskin.bankapi.presentation.BankAccountCredentials;
 import backskin.bankapi.presentation.BankAccountInfo;
+import backskin.bankapi.presentation.DebitCardInfo;
 import backskin.bankapi.services.BankAccountService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -21,26 +24,32 @@ public class BankAccountController {
         this.bankAccountService = bankAccountService;
     }
 
-    @GetMapping({"all", ""})
-    @ResponseBody
+    @GetMapping
     public List<BankAccountInfo> getAllAccounts() throws SQLException {
         return bankAccountService.getAllAccounts();
     }
-    @GetMapping("account?id={accountId}")
-    @ResponseBody
+
+    @GetMapping("{accountId}/info")
     public BankAccountInfo getAccountInfoById(@PathVariable Long accountId) throws  SQLException{
         return bankAccountService.getAccountById(accountId);
     }
 
-    @PostMapping("creaction?number={number}&client_id={clientId}&init_balance={initBalance}")
-    @ResponseBody
-    public BankAccount createNewBankAccount(@PathVariable String number,
-                                            @PathVariable Long clientId,
-                                            @PathVariable BigDecimal initBalance) throws Exception {
-        return bankAccountService.createNewBankAccount(
-                BankAccountCredentials.builder()
-                        .number(number)
-                        .clientId(clientId).balance(initBalance)
-                        .build());
+    @PostMapping({"","create"})
+    public BankAccount createNewBankAccount(@RequestBody BankAccountCredentials credentials) throws Exception {
+        return bankAccountService.createNewBankAccount(credentials);
+    }
+
+    @PostMapping("{accountId}/debitcards/release")
+    public DebitCard createNewDebitCardForAccount(@PathVariable Long accountId) throws Exception {
+        return bankAccountService.createNewDebitCardForAccount(Timestamp.from(Instant.now()),accountId);
+    }
+
+    @GetMapping("{accountId}/debitcards")
+    public List<DebitCardInfo> getAllDebitCardsInfoOnAccount(@PathVariable Long accountId) throws Exception {
+        return bankAccountService.getDebitCardsInfoOnAccount(accountId);
+    }
+    @GetMapping("{accountId}/balance")
+    public String getAccountBalance(@PathVariable Long accountId) throws Exception {
+        return bankAccountService.getAccountBalanceAsString(accountId);
     }
 }

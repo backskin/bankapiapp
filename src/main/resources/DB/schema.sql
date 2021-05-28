@@ -27,7 +27,7 @@ CREATE TABLE debit_cards(
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     bank_account_id Long, -- one to many
     number VARCHAR(20) NOT NULL,
-    expiration_date VARCHAR(4) NOT NULL,
+    expiration_date VARCHAR(5) NOT NULL,
     cvv_code VARCHAR(3) NOT NULL,
     CONSTRAINT bank_debit_cards_account_fk
     FOREIGN KEY (bank_account_id) REFERENCES bank_accounts(id) ON DELETE CASCADE

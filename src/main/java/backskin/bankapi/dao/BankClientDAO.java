@@ -24,6 +24,7 @@ public class BankClientDAO extends AbstractDAO<BankClient> {
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
+
     @Autowired
     public void setMapper(BankClientSqlMapper mapper) {
         this.mapper = mapper;
@@ -35,18 +36,14 @@ public class BankClientDAO extends AbstractDAO<BankClient> {
 
     @Override
     public void update(BankClient entity, Long aLong) throws SQLException {
-        String sqlQuery = "UPDATE ? SET ?,?,? WHERE ?";
+        String sqlQuery = String.format("UPDATE %s SET %s,%s,%s WHERE %s",
+                getTableName(),
+                mapper.getFullNameValidator().validationRule(entity.getFullName()),
+                mapper.getPassportIdValidator().validationRule(entity.getPassportId()),
+                mapper.getPhoneNumberValidator().validationRule(entity.getPhoneNumber()),
+                mapper.getIdValidator().validationRule(entity.getId())
+        );
         PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
-
-        statement.setString(1, getTableName());
-        statement.setString(2,
-                mapper.getFullNameValidator().validationRule(entity.getFullName()));
-        statement.setString(3,
-                mapper.getPassportIdValidator().validationRule(entity.getPassportId()));
-        statement.setString(4,
-                mapper.getPhoneNumberValidator().validationRule(entity.getPhoneNumber()));
-        statement.setString(5,
-                mapper.getIdValidator().validationRule(entity.getId()));
         statement.execute();
         connection.commit();
     }

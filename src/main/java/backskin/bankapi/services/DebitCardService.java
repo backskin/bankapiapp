@@ -2,6 +2,7 @@ package backskin.bankapi.services;
 
 import backskin.bankapi.dao.CRUD;
 import backskin.bankapi.dao.DebitCardDAO;
+import backskin.bankapi.dao.SqlDAO;
 import backskin.bankapi.dao.SqlRepo;
 import backskin.bankapi.domain.DebitCard;
 import backskin.bankapi.presentation.DebitCardCredentials;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 public class DebitCardService {
 
     private final DebitCardProducer cardProducer;
-    private final CRUD<DebitCard, Long> debitCardDAO;
+    private final SqlDAO<DebitCard> debitCardDAO;
     private final SqlRepo<DebitCard> debitCardSqlRepo;
     private final Supplier<TimeZone> timeZoneSupplier;
     private Mapper<DebitCardInfo, DebitCard> infoDebitCardMapper;
@@ -53,10 +54,9 @@ public class DebitCardService {
         return cardProducer.releaseDebitCard(accountId,requestDate);
     }
 
-    public DebitCardInfo saveDebitCard(DebitCardCredentials cardCredentials) throws Exception {
-        DebitCard brandNewCard = debitCardDAO.create(DebitCard.builder().number(cardCredentials.getNumber())
+    public DebitCard saveDebitCard(DebitCardCredentials cardCredentials) throws SQLException {
+        return debitCardDAO.create(DebitCard.builder().number(cardCredentials.getNumber())
                 .bankAccountId(cardCredentials.getAccountId()).expirationDate(cardCredentials.getExpirationDate())
                 .cvvCode(cardCredentials.getCvvCode()).build());
-        return infoDebitCardMapper.map(brandNewCard);
     }
 }

@@ -8,7 +8,9 @@ import java.sql.SQLException;
 
 public interface SqlDAO<T extends SqlModel> extends CRUD<T, Long>{
     String getTableName();
+
     Connection getConnection();
+
     SqlMapper<T> getMapper();
     @Override
     T create(T entity) throws SQLException;

@@ -37,19 +37,15 @@ public class DebitCardDAO extends AbstractDAO<DebitCard> {
 
     @Override
     public void update(DebitCard entity, Long aLong) throws SQLException {
-        String sqlQuery = "UPDATE ? SET ?,?,?,? WHERE ?";
-        PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
-        statement.setString(1, getTableName());
-        statement.setString(2,
-                mapper.getNumberValidator().validationRule(entity.getNumber()));
-        statement.setString(3,
-                mapper.getAccountIdValidator().validationRule(entity.getBankAccountId()));
-        statement.setString(4,
-                mapper.getCVVCodeValidator().validationRule(entity.getCvvCode()));
-        statement.setString(5,
-                mapper.getExpirationDateValidator().validationRule(entity.getExpirationDate()));
-        statement.setString(6,
+        String sqlQuery = String.format("UPDATE %s SET %s,%s,%s,%s WHERE %s",
+                getTableName(),
+                mapper.getNumberValidator().validationRule(entity.getNumber()),
+                mapper.getAccountIdValidator().validationRule(entity.getBankAccountId()),
+                mapper.getCVVCodeValidator().validationRule(entity.getCvvCode()),
+                mapper.getExpirationDateValidator().validationRule(entity.getExpirationDate()),
                 mapper.getIdValidator().validationRule(entity.getId()));
+
+        PreparedStatement statement = getConnection().prepareStatement(sqlQuery);
         statement.execute();
         connection.commit();
     }

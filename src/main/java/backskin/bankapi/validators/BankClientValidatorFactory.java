@@ -36,12 +36,12 @@ public class BankClientValidatorFactory {
 
             @Override
             public String extractTag(BankClient bankClient) {
-                return null;
+                return bankClient.getPhoneNumber();
             }
 
             @Override
             public String tagName() {
-                return null;
+                return "phone_number";
             }
         };
     }
@@ -56,12 +56,12 @@ public class BankClientValidatorFactory {
 
             @Override
             public Long extractTag(BankClient bankClient) {
-                return null;
+                return bankClient.getPassportId();
             }
 
             @Override
             public String tagName() {
-                return null;
+                return "passport_id";
             }
         };
     }

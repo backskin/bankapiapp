@@ -69,10 +69,11 @@ public class BankAccountValidatorFactory {
 
              @Override
              public String validationRule(BigDecimal tag) {
-                 return tagName() + ">="+tag.toString();
+                 return tagName() + " >= "+tag.toString();
              }
          };
     }
+
     @Bean
     public static Validator<BankAccount, BigDecimal> byBalance(){
         return new Validator<>() {

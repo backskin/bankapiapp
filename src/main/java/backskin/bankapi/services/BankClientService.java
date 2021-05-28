@@ -2,11 +2,13 @@ package backskin.bankapi.services;
 
 import backskin.bankapi.dao.SqlDAO;
 import backskin.bankapi.dao.SqlRepo;
+import backskin.bankapi.domain.BankAccount;
 import backskin.bankapi.domain.BankClient;
+import backskin.bankapi.presentation.BankAccountInfo;
 import backskin.bankapi.presentation.BankClientInfo;
 import backskin.bankapi.presentation.Mapper;
+import backskin.bankapi.validators.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -17,12 +19,32 @@ import java.util.stream.Collectors;
 public class BankClientService {
     private final SqlRepo<BankClient> bankClientSqlRepo;
     private final SqlDAO<BankClient> bankClientDAO;
+    private final SqlRepo<BankAccount> bankAccountSqlRepo;
     private Mapper<BankClientInfo, BankClient> infoBankClientMapper;
+    private Validator<BankAccount, Long> bankAccountValidatorByClientId;
+    private Mapper<BankAccountInfo, BankAccount> infoBankAccountMapper;
+
+    @Autowired
+    public void setInfoBankClientMapper(Mapper<BankClientInfo, BankClient> infoBankClientMapper) {
+        this.infoBankClientMapper = infoBankClientMapper;
+    }
+
+    @Autowired
+    public void setBankAccountValidatorByClientId(Validator<BankAccount, Long> bankAccountValidatorByClientId) {
+        this.bankAccountValidatorByClientId = bankAccountValidatorByClientId;
+    }
+
+    @Autowired
+    public void setInfoBankAccountMapper(Mapper<BankAccountInfo, BankAccount> infoBankAccountMapper) {
+        this.infoBankAccountMapper = infoBankAccountMapper;
+    }
 
     public BankClientService(SqlRepo<BankClient> bankClientSqlRepo,
-                             SqlDAO<BankClient> bankClientDAO) {
+                             SqlDAO<BankClient> bankClientDAO,
+                             SqlRepo<BankAccount> bankAccountSqlRepo) {
         this.bankClientSqlRepo = bankClientSqlRepo;
         this.bankClientDAO = bankClientDAO;
+        this.bankAccountSqlRepo = bankAccountSqlRepo;
     }
 
     public List<BankClientInfo> getAllBankClients() throws SQLException {
@@ -34,8 +56,10 @@ public class BankClientService {
         return infoBankClientMapper.map(bankClientDAO.read(clientId));
     }
 
-    @Autowired
-    public void setInfoBankClientMapper(Mapper<BankClientInfo, BankClient> infoBankClientMapper) {
-        this.infoBankClientMapper = infoBankClientMapper;
+    public List<BankAccountInfo> getBankAccountsOnClient(Long clientId) throws Exception {
+        return bankAccountSqlRepo.findAll(bankAccountValidatorByClientId, clientId)
+                .stream().map(infoBankAccountMapper::map).collect(Collectors.toList());
     }
 }
+
+

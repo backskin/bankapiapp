@@ -32,6 +32,7 @@ public class AppConfiguration {
         connection.setAutoCommit(false);
         return connection;
     }
+
     @Bean
     String bankClientsTableName(){
         return "bank_clients";

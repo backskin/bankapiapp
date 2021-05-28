@@ -26,6 +26,7 @@ public class DebitCardsValidatorFactory {
             }
         };
     }
+
     @Bean
     @Qualifier("cardValidatorByNumber")
     Validator<DebitCard, String> cardValidatorByNumber(){
@@ -46,6 +47,7 @@ public class DebitCardsValidatorFactory {
             }
         };
     }
+
     @Bean
     @Qualifier("cardValidatorByExpirationDate")
     Validator<DebitCard, String> cardValidatorByExpirationDate(){

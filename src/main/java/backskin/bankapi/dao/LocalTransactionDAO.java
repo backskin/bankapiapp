@@ -23,6 +23,7 @@ public class LocalTransactionDAO extends AbstractDAO<LocalTransaction> {
     public void setMapper(LocalTransactionSqlMapper mapper) {
         this.mapper = mapper;
     }
+
     @Autowired
     public void setConnection(Connection connection) {
         this.connection = connection;
@@ -34,19 +35,15 @@ public class LocalTransactionDAO extends AbstractDAO<LocalTransaction> {
 
     @Override
     public void update(LocalTransaction entity, Long aLong) throws SQLException {
-        String sqlQuery = "UPDATE ? SET ?,?,?,? WHERE ?";
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
-        statement.setString(1, getTableName());
-        statement.setString(2,
-                mapper.getAccountIdValidator().validationRule(entity.getBankAccountId()));
-        statement.setString(3,
-                mapper.getDateValidator().validationRule(entity.getDate()));
-        statement.setString(4,
-                mapper.getDifferenceValidator().validationRule(entity.getTransactionDifference()));
-        statement.setString(5,
-                mapper.getDetailsValidator().validationRule(entity.getDetails()));
-        statement.setString(6,
+        String sqlQuery = String.format("UPDATE %s SET %s,%s,%s,%s WHERE %s",
+                getTableName(),
+                mapper.getAccountIdValidator().validationRule(entity.getBankAccountId()),
+                mapper.getDateValidator().validationRule(entity.getDate()),
+                mapper.getDifferenceValidator().validationRule(entity.getTransactionDifference()),
+                mapper.getDetailsValidator().validationRule(entity.getDetails()),
                 mapper.getIdValidator().validationRule(entity.getId()));
+
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
         statement.execute();
         connection.commit();
     }
