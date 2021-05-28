@@ -17,7 +17,7 @@ public class BankAccountValidatorFactory {
      * @return the validator
      */
     @Bean
-    public static Validator<BankAccount, String> byNumber(){
+    public Validator<BankAccount, String> byNumber(){
         return new Validator<>() {
             @Override
             public boolean validateObject(BankAccount object, String tag) {
@@ -42,7 +42,7 @@ public class BankAccountValidatorFactory {
      * @return the validator
      */
     @Bean
-    public static Validator<BankAccount, Long> byClientId(){
+    public Validator<BankAccount, Long> byClientId(){
         return new Validator<>() {
             @Override
             public boolean validateObject(BankAccount object, Long tag) {
@@ -67,7 +67,7 @@ public class BankAccountValidatorFactory {
      * @return the validator
      */
     @Bean
-    public static Validator<BankAccount, BigDecimal> byBalanceMoreOrEqual(){
+    public Validator<BankAccount, BigDecimal> byBalanceMoreOrEqual(){
          return new Validator<>() {
              @Override
              public boolean validateObject(BankAccount object, BigDecimal tag) {
@@ -97,7 +97,7 @@ public class BankAccountValidatorFactory {
      * @return the validator
      */
     @Bean
-    public static Validator<BankAccount, BigDecimal> byBalance(){
+    public Validator<BankAccount, BigDecimal> byBalance(){
         return new Validator<>() {
             @Override
             public boolean validateObject(BankAccount object, BigDecimal tag) {
